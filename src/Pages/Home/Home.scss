@@ -1,0 +1,249 @@
+@import '/src/Components/Utilities/Utilities';
+
+
+.home {
+    width: 100%;
+    min-height: 100vh;
+    background-color: $bleached-cedar;
+
+    .home-container {
+        width: 100%;
+        max-width: 700px;
+        min-height: inherit;
+        margin: auto;
+        // border: 1px solid orange;
+        display: flex;
+        flex-direction: column;
+
+        .header {
+            width: 100%;
+            height: 100px;
+            // border: 1px solid white;
+            color: $white-lilac;
+            margin: 40px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .invoice {
+
+                p {
+                    margin-top: -10px;
+                }
+            }
+
+            .status {
+                display: flex;
+                
+                .filter-status {
+                    margin-right: 30px;
+                    display: flex;
+                    align-items: center;
+                    font-weight: 700;
+                    cursor: pointer;
+
+                    span {
+                        margin-right: 10px;
+                    }
+                }
+
+                .add-invoice-btn {
+                    display: flex;
+                    align-items: center;
+                    background-color: $medium-slate-blue;
+                    padding: 8px 12px;
+                    border-radius: 30px;
+                    cursor: pointer;
+
+                    .arrow-plus-wrapper {
+                        // border: 1px solid white;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 7px;
+                        border-radius: 50%;
+                        background-color: $white-lilac;
+                        margin-right: 10px;
+                    }
+
+                    span {
+                        font-weight: bold;
+                    }
+
+                }
+            }
+
+
+        }
+
+        .invoices-wrapper {
+            min-height: 600px;
+            width: 100%;
+            // border: 2px solid orchid;
+
+
+            .zero-invoices-section {
+                width: 100%;
+                min-height: inherit;
+                // border: 2px solid white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+
+                .text-content {
+                    // border: 1px solid white;
+                    color: $white-lilac;
+                    text-align: center;
+                    max-width: 40%;
+                }
+            }
+
+            .user-invoices {
+                width: 100%;
+                min-height: inherit;
+                // min-height: 100px;
+                // border: 1px solid whitesmoke;
+                // display: flex;
+                // flex-direction: column;
+                // justify-content: space-between;
+
+                .invoice-box {
+                    width: 100%;
+                    height: 90px;
+                    border-radius: 7px;
+                    background-color: $ebony-clay;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 15px;
+                    // margin: 10px 0;
+                    cursor: pointer;
+
+                    .details1 {
+                        width: 55%;
+                        display: flex;
+                        align-items: center;
+                        height: inherit;
+                        // border: 1px solid white;
+                        justify-content: space-around;
+                        color: $white-lilac;
+
+                        .invoice-receipt-no {
+
+                            p{
+                                font-weight: bold;
+                            }
+                            span {
+                                color: $regent-grey;
+                            }
+                        }
+
+
+
+                    }
+                    
+                    .details2 {
+                        width: 35%;
+                        display: flex;;
+                        align-items: center;
+                        height: inherit;
+                        // border: 1px solid darkcyan;
+                        justify-content: space-around;
+                        color: $white-lilac;
+
+
+                        .invoice-price {
+                            font-size: 1.3em;
+                            font-weight: bold;
+                        }
+
+                        .invoice-status {
+                            // padding: 1px 15px;
+
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 7px;
+                            // opacity: .4;
+                            z-index: 1;
+                            height: 40px;
+                            width: 100px;
+                            // position: relative;
+
+                            .dot {
+                                width: 10px;
+                                height: 10px;
+                                color: #33D69F;
+                                border-radius: 50%;
+                                margin-right: 10px;
+                                // left: 15px;
+                                // position: absolute;
+                            }
+                            
+                            p {
+                                font-weight: bold;
+                                // color: white;
+                                z-index: 4;
+                                // position: absolute;
+                            }
+
+                        }
+
+                        .paid {
+                            background-color: #33d6a019;
+
+                            .dot {
+                                background-color: #33D69F;
+                            }
+
+                            p {
+                                color: #33D69F;
+                            }
+
+                        }
+
+                        .pending {
+                            background-color: #ff910024;
+
+                            .dot {
+                                background-color: #FF8F00;
+                            }
+
+                            p {
+                                color: #FF8F00;
+                            }
+                        }
+
+                        .draft {
+                            background-color: #dfe3fa1f;
+
+                            .dot {
+                                background-color: #DFE3FA;
+                            }
+
+                            p {
+                                color: #DFE3FA;
+                            }
+                        }
+
+                    }
+
+                }
+
+                .box-wrapper:hover {
+                    border: 1px solid $medium-slate-blue;
+
+                }
+                .invoice-box:hover {
+                }
+
+            }
+
+
+        }
+
+    }
+
+}

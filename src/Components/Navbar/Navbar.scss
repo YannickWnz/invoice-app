@@ -1,0 +1,94 @@
+@import '/src/Components/Utilities/Utilities';
+
+
+.navbar {
+    width: 100px;
+    max-width: 100px;
+    min-height: 100vh;
+    background-color: #373B53;
+    border-radius: 0 20px 20px 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .logo-container {
+        width: 100%;
+        height: 100px;
+        border-radius: 0 20px 20px 0;
+        background-color: $medium-slate-blue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        img {
+            width: 35px;
+            height: 35px;
+            z-index: 2;
+        }
+
+        .log-bg-effect {
+            position: absolute;
+            bottom: 0;
+            background-color: white;
+            opacity: .2;
+            width: 100%;
+            height: calc(100% / 2);
+            border-radius: 20px 0 20px 0;
+            z-index: 1;
+        }
+    }
+
+    .navbar-bottom-section {
+        width: 100%;
+        height: 150px;
+        border-radius: 0 0 20px 0;
+        // border: 1px solid blue;
+        display: flex;
+        flex-direction: column;
+
+        .site-mode-btn-wrapper {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            i {
+                font-size: 1.5em;
+                color: $regent-grey;
+                cursor: pointer;
+            }
+
+        }
+
+        .user-setting-section {
+            width: 100%;
+            height: 100px;
+            border-radius: 0 0 20px 0;
+            border: 0;
+            border-top: .5px solid $regent-grey;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .avatar {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background-image: url('../../../public/starter-code/assets/image-avatar.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                cursor: pointer;
+            }
+
+        }
+
+    }
+
+}
