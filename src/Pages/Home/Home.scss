@@ -33,6 +33,8 @@
 
             .status {
                 display: flex;
+                // border: 1px solid white;
+
                 
                 .filter-status {
                     margin-right: 30px;
@@ -40,10 +42,66 @@
                     align-items: center;
                     font-weight: 700;
                     cursor: pointer;
+                    position: relative;
 
                     span {
                         margin-right: 10px;
                     }
+
+                    .select-status {
+                        position: absolute;
+                        width: 200px;
+                        height: 160px;
+                        top: 50px;
+                        left: -50px;
+                        background-color: $ebony-clay;
+                        border-radius: 10px;
+                        z-index: 10;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        animation: animateSelectStatus .3s linear;
+                        // display: none;
+                        
+                        @keyframes animateSelectStatus{
+                            0%{
+                                transform: translateY(20px);
+                            }
+                            100%{
+                                transform: translateY(0px);
+                            }
+                        }
+
+
+                        form {
+                            width: 80%;
+                            height: 80%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-around;
+
+                            div {
+                                // border: 1px solid red;
+                            }
+
+
+                            input[type="checkbox"] {
+                                width: 20px;
+                                height: 20px;
+                                margin-right: 10px;
+                            }
+
+                            label {
+                                font-size: 1.1em;
+                                font-weight: normal;
+                                display: flex;
+                                align-items: center;
+                            }
+
+                        }
+
+                    }
+
                 }
 
                 .add-invoice-btn {

@@ -11,10 +11,10 @@ export default function Navbar() {
             <div className='navbar-bottom-section'>
                 <div className='site-mode-btn-wrapper'>
                     <div className='light'>
-                        <i class="fa-solid fa-moon"></i>
+                        <i className="fa-solid fa-moon"></i>
                     </div>
                     <div className='dark' style={{display: 'none'}}>
-                        <i class="fa-solid fa-sun"></i>
+                        <i className="fa-solid fa-sun"></i>
                     </div>
                 </div>
                 <div className='user-setting-section'>

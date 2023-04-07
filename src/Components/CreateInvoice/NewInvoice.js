@@ -116,7 +116,7 @@ export default function NewInvoice() {
                                                     <option value='Net 1 day'>Net 1 day</option>
                                                     <option value='Net 7 days'>Net 7 days</option>
                                                     <option value='Net 14 days'>Net 14 days</option>
-                                                    <option selected value='Net 30 days'>Net 30 days</option>
+                                                    <option value='Net 30 days'>Net 30 days</option>
                                                 </select>
                                             </label>
                                         </div>
