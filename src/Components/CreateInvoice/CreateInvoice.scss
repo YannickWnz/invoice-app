@@ -1,0 +1,184 @@
+@import '/src/Components/Utilities/Utilities';
+
+.create-invoice {
+    position: absolute;
+    width: 650px;
+    min-height: 100vh;
+    background-color: $ebony-clay;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    border-radius: 0 20px 20px 0;
+    display: flex;
+    justify-content: flex-end;
+    overflow-x: hidden;
+
+
+    &-container {
+        width: 100%;
+        max-width: calc(100% - 80px);
+        min-height: inherit;
+        border: 1px solid white;
+        color: white;
+        position: relative;
+        
+        .contents-wrapper {
+            width: 100%;
+            // padding: 0 20px;
+            max-width: 90%;
+            max-height: 700px;
+            // min-height: 700px;
+            margin: auto;
+            border: 1px solid blue;
+            z-index: 1;
+            padding-top: 40px;
+            overflow-y: scroll;
+
+            h1 {
+                font-weight: 500;
+                font-size: 1.8em;
+            }
+
+            .form-wrapper {
+                width: 100%;
+                min-height: 200px;
+                min-height: inherit;
+                border: 1px solid white;
+
+                form {
+                    width: 100%;
+                    min-height: inherit;
+
+                    input {
+                        border: none;
+                        width: 100%;
+                        padding: 10px 5px;
+                        border-radius: 2px;
+                        background-color: #373B53;
+                        box-sizing: border-box;
+                        outline: none;
+                        color: white;
+                        font-weight: bold;
+                        border: .5px solid $regent-grey;
+                        margin-top: 10px;
+                    }
+
+                    .bill-from-section {
+
+                        p {
+                            color: $medium-slate-blue;
+                            font-weight: bold;
+                        }
+                    }
+
+                    .street-address-input {
+                        width: 100%;
+
+                        input {
+                            width: 100%;
+                        }
+
+                    }
+
+                    .city-pcode-country {
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+
+                        div {
+                            width: calc(100% / 3.3);
+                            margin: 20px 0;
+
+                            input {
+                                width: 100%;
+                            }
+                        }
+
+                    }
+
+                    .bill-to-section {
+                        width: 100%;
+
+                        p {
+                            color: $medium-slate-blue;
+                            font-weight: bold;
+                        }
+
+                        .client-email {
+                            margin: 20px 0;
+                        }
+
+                        .date-issue-payment {
+                            width: 100%;
+                            display: flex;
+                            justify-content: space-between;
+
+                            div {
+                                width: calc(100% / 2.2);
+                                margin: 20px 0 0;
+
+                                input {
+                                    width: 100%;
+                                }
+                            }
+
+                            .payment-terms {
+                                
+                                select {
+                                    border: none;
+                                    width: 100%;
+                                    padding: 10px 5px;
+                                    border-radius: 2px;
+                                    background-color: #373B53;
+                                    box-sizing: border-box;
+                                    outline: none;
+                                    color: white;
+                                    font-weight: bold;
+                                    border: .5px solid $regent-grey;
+                                    margin-top: 10px;
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        .contents-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        .options {
+            position: absolute;
+            bottom: 0 !important;
+            right: 0;
+            border: 1px solid red;
+            width: 100%;
+            max-width: 100%;
+            height: 100px;
+            z-index: 5;
+            background-color: aquamarine;
+
+            .options-contents-wrapper {
+                width: 100%;
+                max-width: 90%;
+                height: inherit;
+                display: flex;
+                margin: auto;
+                justify-content: space-between;
+                border: 2px solid indianred;
+            }
+        }
+    }
+
+
+}
+
+.create-invoice::-webkit-scrollbar {
+    display: none;
+}

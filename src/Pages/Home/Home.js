@@ -1,6 +1,16 @@
 import './Home.scss'
+import {Link} from 'react-router-dom'
+import { useState } from 'react'
 
 function Home() {
+
+    const [invoices, setInvoices] = useState([])
+
+    // const invoiceBox = [
+    //     {}
+    // ]
+
+
     return (
         <div className="home">
             <div className='home-container'>
@@ -32,144 +42,56 @@ function Home() {
                         </div>
                     </div>
                     <div className='user-invoices'>
-                        <div className='invoice-box'>
-                            <div className='details1'>
-                                <div className='invoice-receipt-no'>
-                                    <p> <span>#</span>RT3080 </p>
+                        <Link to='/invoice/12'>
+                            <div className='invoice-box'>
+                                <div className='details1'>
+                                    <div className='invoice-receipt-no'>
+                                        <p> <span>#</span>RT3080 </p>
+                                    </div>
+                                    <div className='invoice-due-date'>
+                                        <p>Due 19 Aug 2021</p>
+                                    </div>
+                                    <div className='invoice-client-name'>
+                                        <p>Jensen Huang</p>
+                                    </div>
                                 </div>
-                                <div className='invoice-due-date'>
-                                    <p>Due 19 Aug 2021</p>
-                                </div>
-                                <div className='invoice-client-name'>
-                                    <p>Jensen Huang</p>
-                                </div>
-                            </div>
-                            <div className='details2'>
-                                <div className='invoice-price'>
-                                    <p>$334.40</p>
-                                </div>
-                                <div className='invoice-status paid'>
-                                    <span className='dot'></span>
-                                    <p>Paid</p>
-                                </div>
-                                <img src='/starter-code/assets/icon-arrow-right.svg' /> 
-                            </div>
-                        </div>
-                        <div className='invoice-box'>
-                            <div className='details1'>
-                                <div className='invoice-receipt-no'>
-                                    <p> <span>#</span>RT3080 </p>
-                                </div>
-                                <div className='invoice-due-date'>
-                                    <p>Due 19 Aug 2021</p>
-                                </div>
-                                <div className='invoice-client-name'>
-                                    <p>Jensen Huang</p>
+                                <div className='details2'>
+                                    <div className='invoice-price'>
+                                        <p>$334.40</p>
+                                    </div>
+                                    <div className='invoice-status paid'>
+                                        <span className='dot'></span>
+                                        <p>Paid</p>
+                                    </div>
+                                    <img src='/starter-code/assets/icon-arrow-right.svg' /> 
                                 </div>
                             </div>
-                            <div className='details2'>
-                                <div className='invoice-price'>
-                                    <p>$334.40</p>
+                        </Link>
+                        <Link to='/invoice/12'>
+                            <div className='invoice-box'>
+                                <div className='details1'>
+                                    <div className='invoice-receipt-no'>
+                                        <p> <span>#</span>RT3080 </p>
+                                    </div>
+                                    <div className='invoice-due-date'>
+                                        <p>Due 19 Aug 2021</p>
+                                    </div>
+                                    <div className='invoice-client-name'>
+                                        <p>Jensen Huang</p>
+                                    </div>
                                 </div>
-                                <div className='invoice-status pending'>
-                                    <span className='dot'></span>
-                                    <p>Pending</p>
-                                </div>
-                                <img src='/starter-code/assets/icon-arrow-right.svg' /> 
-                            </div>
-                        </div>
-                        <div className='invoice-box'>
-                            <div className='details1'>
-                                <div className='invoice-receipt-no'>
-                                    <p> <span>#</span>RT3080 </p>
-                                </div>
-                                <div className='invoice-due-date'>
-                                    <p>Due 19 Aug 2021</p>
-                                </div>
-                                <div className='invoice-client-name'>
-                                    <p>Jensen Huang</p>
-                                </div>
-                            </div>
-                            <div className='details2'>
-                                <div className='invoice-price'>
-                                    <p>$334.40</p>
-                                </div>
-                                <div className='invoice-status draft'>
-                                    <span className='dot'></span>
-                                    <p>Draft</p>
-                                </div>
-                                <img src='/starter-code/assets/icon-arrow-right.svg' /> 
-                            </div>
-                        </div>
-                        <div className='invoice-box'>
-                            <div className='details1'>
-                                <div className='invoice-receipt-no'>
-                                    <p> <span>#</span>RT3080 </p>
-                                </div>
-                                <div className='invoice-due-date'>
-                                    <p>Due 19 Aug 2021</p>
-                                </div>
-                                <div className='invoice-client-name'>
-                                    <p>Jensen Huang</p>
+                                <div className='details2'>
+                                    <div className='invoice-price'>
+                                        <p>$334.40</p>
+                                    </div>
+                                    <div className='invoice-status paid'>
+                                        <span className='dot'></span>
+                                        <p>Paid</p>
+                                    </div>
+                                    <img src='/starter-code/assets/icon-arrow-right.svg' /> 
                                 </div>
                             </div>
-                            <div className='details2'>
-                                <div className='invoice-price'>
-                                    <p>$334.40</p>
-                                </div>
-                                <div className='invoice-status pending'>
-                                    <span className='dot'></span>
-                                    <p>Pending</p>
-                                </div>
-                                <img src='/starter-code/assets/icon-arrow-right.svg' /> 
-                            </div>
-                        </div>
-                        <div className='invoice-box'>
-                            <div className='details1'>
-                                <div className='invoice-receipt-no'>
-                                    <p> <span>#</span>RT3080 </p>
-                                </div>
-                                <div className='invoice-due-date'>
-                                    <p>Due 19 Aug 2021</p>
-                                </div>
-                                <div className='invoice-client-name'>
-                                    <p>Jensen Huang</p>
-                                </div>
-                            </div>
-                            <div className='details2'>
-                                <div className='invoice-price'>
-                                    <p>$334.40</p>
-                                </div>
-                                <div className='invoice-status paid'>
-                                    <span className='dot'></span>
-                                    <p>Paid</p>
-                                </div>
-                                <img src='/starter-code/assets/icon-arrow-right.svg' /> 
-                            </div>
-                        </div>
-                        <div className='invoice-box'>
-                            <div className='details1'>
-                                <div className='invoice-receipt-no'>
-                                    <p> <span>#</span>RT3080 </p>
-                                </div>
-                                <div className='invoice-due-date'>
-                                    <p>Due 19 Aug 2021</p>
-                                </div>
-                                <div className='invoice-client-name'>
-                                    <p>Jensen Huang</p>
-                                </div>
-                            </div>
-                            <div className='details2'>
-                                <div className='invoice-price'>
-                                    <p>$334.40</p>
-                                </div>
-                                <div className='invoice-status paid'>
-                                    <span className='dot'></span>
-                                    <p>Paid</p>
-                                </div>
-                                <img src='/starter-code/assets/icon-arrow-right.svg' /> 
-                            </div>
-                        </div>
+                        </Link>
                     </div>
                 </div>
             </div>
