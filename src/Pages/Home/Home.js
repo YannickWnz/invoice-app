@@ -1,6 +1,7 @@
 import './Home.scss'
 import {Link} from 'react-router-dom'
 import { useState } from 'react'
+import NewInvoice from '../../Components/CreateInvoice/NewInvoice'
 
 function Home() {
 
@@ -22,6 +23,8 @@ function Home() {
     // const [invoices, setInvoices] = useState([])
     const [invoices, setInvoices] = useState(invoiceBox)
     const [selectedStatus, setSelectedStatus] = useState([])
+    const [newInvoiceForm, setNewInvoiceForm] = useState(false)
+
 
     const [filterBox, setFilterBox] = useState(false)
 
@@ -29,11 +32,8 @@ function Home() {
         setFilterBox(!filterBox);
     }
 
-    const handleFilterStatus = (event) => {
-        if(event.target.target) {
-            console.log()
-        }
-    
+    const handleInvoiceFormState = (state) => {
+        setNewInvoiceForm(state);
     }
 
     const filterInvoices = (status) => {
@@ -44,23 +44,11 @@ function Home() {
         })
     }
 
-    selectedStatus.map(status => {
-        console.log(status)
-    })
-    const filtertest = ({status}) => {
-        // console.log(status)
-        // setInvoices((prev) => {
-        //     return prev.filter(invoice => {
-        //         // return invoice.status == status
-        //     })
-        // })
-    }
-
-    // console.log(selectedStatus)
-
     return (
-        <div className="home">
-            <div className='home-container'>
+        <div className="home" >
+            <NewInvoice invoiceFormState={handleInvoiceFormState} newInvoice={newInvoiceForm} />
+
+            <div className='home-container' >
                 <div className='header'>
                     <div className='invoice'>
                         <h1>Invoices</h1>
@@ -69,7 +57,7 @@ function Home() {
                     </div>
                     <div className='status'>
                         <div className='filter-status'>
-                            <span onClick={handleFilterBoxState}>
+                            <span onClick={() => {handleFilterBoxState(true)}}>
                                 Filter by status
                             </span>
                             <img src='/starter-code/assets/icon-arrow-down.svg' />
@@ -80,24 +68,13 @@ function Home() {
                                             <div key={status.id} className='status-checkbox'>
                                                 <label onChange={(e) => {
                                                     if(e.target.checked) {
-                                                        setSelectedStatus([
-                                                            ...selectedStatus,
-                                                            {status: status.status}
-                                                        ])
                                                         filterInvoices(status.status)
-                                                        // filtertest(...selectedStatus)
-
-                                                        // console.log(selectedStatus.length)
                                                     } else {
                                                         setInvoices(invoiceBox)
-                                                        setSelectedStatus(
-                                                            selectedStatus.filter(status => status == status.status)
-                                                        )
                                                     }
-                                                        // console.log(selectedStatus)
 
                                                 }}>
-                                                    <input type='checkbox' />
+                                                    <input type='checkbox' name={`${status.status.toLowerCase()}`} />
                                                     {status.status}
                                                 </label>
                                             </div>
@@ -124,7 +101,7 @@ function Home() {
                                 </form>
                             </div>}
                         </div>
-                        <div className='add-invoice-btn'>
+                        <div className='add-invoice-btn' onClick={handleInvoiceFormState}>
                             <div className='arrow-plus-wrapper'>
                                 <img src='/starter-code/assets/icon-plus.svg' />
                             </div>

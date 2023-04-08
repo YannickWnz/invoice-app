@@ -13,7 +13,7 @@ function App() {
       {/* <h1>whats poppin homeboy</h1> */}
       <Navbar />
       {/* <CreateInvoice /> */}
-      <NewInvoice />
+      {/* <NewInvoice /> */}
       <Router>
         <Routes>
           <Route path='/' element={<Home />} ></Route>
