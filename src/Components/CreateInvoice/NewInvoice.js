@@ -23,8 +23,12 @@ export default function NewInvoice({invoiceFormState, newInvoice}) {
         </div>
     )
 
-    const testElement = [
-        {itemEl: 'itemEl', deleteIcon: '/starter-code/assets/icon-delete.svg'}
+    const listItemElement = [
+        {id: Math.floor(Math.random() * 1000000)}
+    ]
+
+    const itemsEl = [
+        {id: Math.floor(Math.random() * 1000000), itemName: '', itemQty: '', itemPrice: '', totalPrice: ''}
     ]
 
     let nextID = 1;
@@ -35,7 +39,17 @@ export default function NewInvoice({invoiceFormState, newInvoice}) {
             })
     }
 
-    // let str = '<p>hey yooo</p>'
+    function filterClickedItem(id) {
+
+        setListel((prev) => {
+            return prev.filter(element => {
+                return element.id !== id
+            })
+        })
+        if(itemElement.length !== 1) {}
+    }
+
+    const [listel, setListel] = useState(itemsEl)
     // empty variables states
     const [streetAddress, setStreetAddress] = useState('')
     const [countryBillFrom, setCountryBillFrom] = useState('')
@@ -51,10 +65,17 @@ export default function NewInvoice({invoiceFormState, newInvoice}) {
     const [termsOfPayment, setTermsOfPayment] = useState('')
     const [projectDescription, setProjectDescription] = useState('')
     const [newInvoiceFormData, setNewInvoiceFormData] = useState([])
-    const [itemElement, setItemElement] = useState(testElement)
-
-
-
+    const [itemElement, setItemElement] = useState(listItemElement)
+    const [itemQty, setItemQty] = useState('')
+    const [itemQty1, setItemQty1] = useState('')
+    const [itemQty2, setItemQty2] = useState('')
+    const [itemQty3, setItemQty3] = useState('')
+    const [itemPrice, setItemPrice] = useState('')
+    const [itemPrice1, setItemPrice1] = useState('')
+    const [itemPrice2, setItemPrice2] = useState('')
+    const [itemPrice3, setItemPrice3] = useState('')
+    // const [itemListTotal, setItemListTotal] = useState('0.00')
+    const [itemListTotal, setItemListTotal] = useState('0.00')
 
     // error states
     const [streetAddressError, setStreetAddressError] = useState(false)
@@ -68,40 +89,34 @@ export default function NewInvoice({invoiceFormState, newInvoice}) {
 
     // const [emptyCityError, setEmptyCityError] = useState(false)
 
-    const makeDiv = () => {
-        return (
-            <div className='inputs'>
-                <div className='item-name-input'>
-                    <input type='text' />
-                </div>
-                <div className='item-qty-input'>
-                    <input type='number' />
-                </div>
-                <div className='item-price-input'>
-                    <input type='text' /> 
-                </div>
-                <div className='item-total-price'>
-                    <p>156.00</p>
-                </div>
-                <div className='item-delete-icon'>
-                    <img src='/starter-code/assets/icon-delete.svg' />
-                </div>
-            </div>
-        )
+
+    const handleItemListTotalPrices = () => {}
+
+    const handleItemLists = (index, e) => {
+        // console.log(e.target.value, index)
+        if(e.target.value < 0) {
+            e.target.value *= -1
+        }
+        let newData = [...listel]
+        newData[index][e.target.name] = e.target.value
+        if(newData[index].itemQty || newData[index].itemPrice) {
+            newData[index].totalPrice = newData[index].itemQty * newData[index].itemPrice
+        }
+        // console.log(newData[index])
+        setListel(newData)
+        // console.log(newData)
     }
 
-    const testEl = '<p>hey yooo</p>'
-
-    // function newEl() {
-    
-    // }
-
-    // console.log(streetAddressError)
 
     // console.log(newInvoice)
     const handleNewInvoiceSubmit = (e) => {
         e.preventDefault();
         console.log('submitted')
+        // console.log(listel)
+        listel.map((el, index) => {
+            console.log(el)
+        })
+
         // console.log(streetAddress)
 
         if(streetAddress.length === 0) {
@@ -136,6 +151,7 @@ export default function NewInvoice({invoiceFormState, newInvoice}) {
             setEmptyProjectDescriptionError(true)
             return false;
         }
+
 
         console.log(streetAddress, countryBillFrom, cityBillFrom, postCodeBillFrom, clientName, clientEmail, clientAddress, clientCity, clientPostCode, clientCountry, dateOfIssue, termsOfPayment, projectDescription)
 
@@ -357,56 +373,63 @@ export default function NewInvoice({invoiceFormState, newInvoice}) {
                                                 </div>
                                             </div> */}
                                             {/* {itemElement} */}
-                                            {itemElement && itemElement.map((element, index) => {
+                                            {listel && listel.map((element, index) => {
                                                 return (
-                                                    <div key={index} className='inputs'>
+                                                    <div key={element.id} className='inputs'>
                                                         <div className='item-name-input'>
-                                                            <input type='text' />
+                                                            <input 
+                                                            type=''
+                                                            name='itemName'
+                                                            onChange={(e) => {
+                                                                handleItemLists(index, e)
+                                                            }} 
+                                                            />
                                                         </div>
                                                         <div className='item-qty-input'>
-                                                            <input type='number' />
+                                                            <input 
+                                                            type='number' 
+                                                            name='itemQty'
+                                                            onChange={(e) => {
+                                                                handleItemLists(index, e)
+                                                            }} />
                                                         </div>
                                                         <div className='item-price-input'>
-                                                            <input type='text' /> 
+                                                            <input 
+                                                            type='number' 
+                                                            placeholder='0.00' 
+                                                            name='itemPrice'
+                                                            onChange={(e) => {
+                                                                // console.log(e.target.name)
+                                                                // setItemPrice(e.target.value)
+                                                                handleItemLists(index, e)
+                                                                // console.log(e.target.value)
+                                                            }} /> 
                                                         </div>
                                                         <div className='item-total-price'>
-                                                            <p>156.00</p>
+                                                            {/* <p>156.00</p> */}
+                                                            {/* <p>{itemQtyId === itemPriceId && itemPrice * itemQty}</p> */}
+                                                            {/* <p>{itemQty * itemPrice}</p> */}
+                                                            <p>{`${element.totalPrice ? element.totalPrice : '0.00'}`}</p>
                                                         </div>
-                                                        <div className='item-delete-icon'>
-                                                            <img src={element.deleteIcon} />
+                                                        <div className='item-delete-icon' onClick={(e) => {
+                                                            // console.log(element.id)
+                                                            filterClickedItem(element.id)
+                                                        }}>
+                                                            <img src='/starter-code/assets/icon-delete.svg' />
                                                         </div>
                                                     </div>
                                                 )
                                             })}
-                                            {/* <div className='inputs'>
-                                                <div className='item-name-input'>
-                                                    <input type='text' />
-                                                </div>
-                                                <div className='item-qty-input'>
-                                                    <input type='number' />
-                                                </div>
-                                                <div className='item-price-input'>
-                                                    <input type='text' /> 
-                                                </div>
-                                                <div className='item-total-price'>
-                                                    <p>156.00</p>
-                                                </div>
-                                                <div className='item-delete-icon'>
-                                                    <img src='/starter-code/assets/icon-delete.svg' />
-                                                </div>
-                                            </div> */}
                                             
-                                            <button className='add-new-invoice' onClick={(e) => {
+                                            {listel.length < 3 && <button className='add-new-invoice' onClick={(e) => {
                                                 e.preventDefault()
-                                                console.log('yooo')
-                                                // itemElement.push({
-                                                //     id: nextID++
-                                                // })
-                                                setItemElement((prev) => [...prev, itemElement])
-                                                if(itemElement.length === 2) {
-                                                    console.log('no more')
-                                                }
-                                            }}>+ Add New Item</button>
+                                                const newElement = {id: Math.floor(Math.random() * 1000000)}
+                                                setItemElement((prev) => [...prev, newElement])
+                                                if(itemElement.length === 2) {}
+                                                const newListEl = {id: Math.floor(Math.random() * 1000000), itemName: '', itemQty: '', itemPrice: '', totalPrice: ''}
+                                                setListel((prev) => [...prev, newListEl])
+                                                // console.log(listel, listel.length)
+                                            }}>+ Add New Item</button>}
                                         </div>
                                     </div>
 
