@@ -9,8 +9,6 @@ function Home() {
         { receiptNo: 'RT545', date: '19 Aug 2023', clientName: 'Jason Kidd', price: '356.00', status: 'Paid'},
         { receiptNo: 'US535', date: '20 Sept 2023', clientName: 'Mario', price: '483.00', status: 'Pending'},
         { receiptNo: 'YA493', date: '25 Dec 2023', clientName: 'Yannick', price: '833.00', status: 'Draft'},
-        { receiptNo: 'YA669', date: '01 Dec 2023', clientName: 'johnny', price: '250.00', status: 'Pending'},
-        { receiptNo: 'JA896', date: '31 Jul 2023', clientName: 'Janice Ng', price: '250.00', status: 'Draft'},
         { receiptNo: 'TG001', date: '02 Feb 2023', clientName: 'Marc Antoine', price: '250.00', status: 'Paid'}
     ]
 
@@ -24,9 +22,18 @@ function Home() {
     const [invoices, setInvoices] = useState(invoiceBox)
     const [selectedStatus, setSelectedStatus] = useState([])
     const [newInvoiceForm, setNewInvoiceForm] = useState(false)
-
-
+    const [newInvoiceFormData, setNewInvoiceFormData] = useState([])
     const [filterBox, setFilterBox] = useState(false)
+
+
+    const handleFormData = (data) => {
+        setNewInvoiceFormData([
+            ...newInvoiceFormData,
+            data
+        ])
+        console.log(newInvoiceFormData);
+    }
+
 
     const handleFilterBoxState = () => {
         setFilterBox(!filterBox);
@@ -46,14 +53,13 @@ function Home() {
 
     return (
         <div className="home" >
-            <NewInvoice invoiceFormState={handleInvoiceFormState} newInvoice={newInvoiceForm} />
+            <NewInvoice invoiceFormState={handleInvoiceFormState} newInvoice={newInvoiceForm} formdata={handleFormData} />
 
             <div className='home-container' >
                 <div className='header'>
                     <div className='invoice'>
                         <h1>Invoices</h1>
-                        <p>There are 4 total invoices</p>
-                        {/* <p>No invoices</p> */}
+                        {newInvoiceFormData.length > 0 ? <p>There are {newInvoiceFormData.length} total invoices</p> : <p>No invoices</p>}
                     </div>
                     <div className='status'>
                         <div className='filter-status'>
@@ -110,24 +116,24 @@ function Home() {
                     </div>
                 </div>
                 <div className='invoices-wrapper'>
-                    <div className='zero-invoices-section' style={{display: 'none'}}>
+                    {newInvoiceFormData.length === 0 && <div className='zero-invoices-section' >
                         <img src='/starter-code/assets/illustration-empty.svg' />
                         <div className='text-content'>
                             <h2>There is nothing here</h2>
                             <p>Create an invoive by clicking the <b>New invoice</b> button and get started</p>
                         </div>
-                    </div>
-                    <div className='user-invoices'>
-                        {invoices && invoices.map(invoice => {
+                    </div>}
+                    {newInvoiceFormData.length > 0 && <div className='user-invoices'>
+                        {newInvoiceFormData && newInvoiceFormData.map(invoice => {
                             return (
-                                <Link key={invoice.receiptNo} to='/invoice/12'>
+                                <Link key={invoice.id} to={`/invoice/${invoice.id}`}>
                                     <div className='invoice-box'>
                                         <div className='details1'>
                                             <div className='invoice-receipt-no'>
                                                 <p> <span>#</span>{invoice.receiptNo} </p>
                                             </div>
                                             <div className='invoice-due-date'>
-                                                <p>Due {invoice.date}</p>
+                                                <p>Due {invoice.dateOfIssue}</p>
                                             </div>
                                             <div className='invoice-client-name'>
                                                 <p>{invoice.clientName}</p>
@@ -135,12 +141,12 @@ function Home() {
                                         </div>
                                         <div className='details2'>
                                             <div className='invoice-price'>
-                                                <p>${invoice.price}</p>
+                                                <p>${invoice.sumOfTotalPrice}</p>
                                             </div>
                                             {/* <div className='invoice-status paid'> */}
-                                            <div className={`invoice-status ${invoice.status.toLowerCase()}`}>
+                                            <div className={`invoice-status ${invoice.invoiceStatus.toLowerCase()}`}>
                                                 <span className='dot'></span>
-                                                <p>{invoice.status}</p>
+                                                <p>{invoice.invoiceStatus}</p>
                                             </div>
                                             <img src='/starter-code/assets/icon-arrow-right.svg' /> 
                                         </div>
@@ -173,7 +179,7 @@ function Home() {
                                 </div>
                             </div>
                         </Link> */}
-                    </div>
+                    </div>}
                 </div>
             </div>
         </div>

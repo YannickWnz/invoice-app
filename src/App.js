@@ -17,7 +17,7 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Home />} ></Route>
-          <Route path='/invoice' element={<Invoice />} ></Route>
+          <Route path='/invoice/:id' element={<Invoice />} ></Route>
         </Routes>
       </Router>
     </div>

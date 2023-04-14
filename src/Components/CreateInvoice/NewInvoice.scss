@@ -28,6 +28,23 @@
         color: white;
         overflow-y: scroll;
 
+        form {
+            width: 100%;
+            height: 100vh;
+            // border: 1px solid red;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            overflow: hidden;
+            color: white;
+            overflow-y: scroll;
+        }
+
+        form::-webkit-scrollbar {
+            display: none;
+        }
+
 
         &-contents {
             width: calc(100% - 100px);
@@ -59,7 +76,8 @@
                 }
 
 
-                form {
+                // form.form {
+                .form {
                     width: 100%;
                     min-height: inherit;
                     padding: 10px 0 50px;
