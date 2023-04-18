@@ -1,7 +1,8 @@
 import './Home.scss'
 import {Link} from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import NewInvoice from '../../Components/CreateInvoice/NewInvoice'
+import axios from 'axios'
 
 function Home() {
 
@@ -18,12 +19,17 @@ function Home() {
         {id: 3, status: 'Paid'}
     ]
 
+    const emptyInvoice = [{}]
+
     // const [invoices, setInvoices] = useState([])
     const [invoices, setInvoices] = useState(invoiceBox)
     const [selectedStatus, setSelectedStatus] = useState([])
     const [newInvoiceForm, setNewInvoiceForm] = useState(false)
     const [newInvoiceFormData, setNewInvoiceFormData] = useState([])
     const [filterBox, setFilterBox] = useState(false)
+    // const [invoiceData, setInvoiceData] = useState([])
+    const [invoiceData, setInvoiceData] = useState([])
+    const [isDataFetched, setIsDataFetched] = useState(false)
 
 
     const handleFormData = (data) => {
@@ -31,8 +37,27 @@ function Home() {
             ...newInvoiceFormData,
             data
         ])
-        console.log(newInvoiceFormData);
     }
+
+    function getInvoiceFromDB() {
+        axios.get('http://localhost:80/api/').then(function(response) {
+
+            // if(response.data.length === 0) {
+            //     setInvoiceData([])
+            // } else if(response.data.length > 0){
+            //     setInvoiceData(response.data)
+            // }
+            
+            if(response.data.length !== 0) {
+                setInvoiceData(response.data)
+            }
+
+            setIsDataFetched(false)
+        })
+    }
+    useEffect(() => {
+        getInvoiceFromDB()
+    }, [isDataFetched])
 
 
     const handleFilterBoxState = () => {
@@ -44,22 +69,22 @@ function Home() {
     }
 
     const filterInvoices = (status) => {
-        setInvoices((prev) => {
+        setNewInvoiceFormData((prev) => {
             return prev.filter(invoice => {
-                return invoice.status == status
+                return invoice.invoiceStatus == status
             })
         })
     }
 
     return (
         <div className="home" >
-            <NewInvoice invoiceFormState={handleInvoiceFormState} newInvoice={newInvoiceForm} formdata={handleFormData} />
+            <NewInvoice setIsDataFetched={setIsDataFetched} invoiceFormState={handleInvoiceFormState} newInvoice={newInvoiceForm} formdata={handleFormData} />
 
             <div className='home-container' >
                 <div className='header'>
                     <div className='invoice'>
                         <h1>Invoices</h1>
-                        {newInvoiceFormData.length > 0 ? <p>There are {newInvoiceFormData.length} total invoices</p> : <p>No invoices</p>}
+                        {invoiceData.length > 0 ? <p>There are {invoiceData.length} total invoices</p> : <p>No invoices</p>}
                     </div>
                     <div className='status'>
                         <div className='filter-status'>
@@ -76,7 +101,7 @@ function Home() {
                                                     if(e.target.checked) {
                                                         filterInvoices(status.status)
                                                     } else {
-                                                        setInvoices(invoiceBox)
+                                                        setInvoices(newInvoiceFormData)
                                                     }
 
                                                 }}>
@@ -116,37 +141,38 @@ function Home() {
                     </div>
                 </div>
                 <div className='invoices-wrapper'>
-                    {newInvoiceFormData.length === 0 && <div className='zero-invoices-section' >
+                    {invoiceData.length === 0 && <div className='zero-invoices-section' >
                         <img src='/starter-code/assets/illustration-empty.svg' />
                         <div className='text-content'>
                             <h2>There is nothing here</h2>
                             <p>Create an invoive by clicking the <b>New invoice</b> button and get started</p>
                         </div>
                     </div>}
-                    {newInvoiceFormData.length > 0 && <div className='user-invoices'>
-                        {newInvoiceFormData && newInvoiceFormData.map(invoice => {
+                    {invoiceData.length > 0 && <div className='user-invoices'>
+                        {invoiceData.length > 0 && invoiceData.map(invoice => {
                             return (
-                                <Link key={invoice.id} to={`/invoice/${invoice.id}`}>
+                                <Link key={invoice.invoiceID} to={`/invoice/${invoice.invoiceID}`}>
                                     <div className='invoice-box'>
                                         <div className='details1'>
                                             <div className='invoice-receipt-no'>
-                                                <p> <span>#</span>{invoice.receiptNo} </p>
+                                                <p> <span>#</span>{invoice.receipt_number} </p>
                                             </div>
                                             <div className='invoice-due-date'>
-                                                <p>Due {invoice.dateOfIssue}</p>
+                                                <p>Due {invoice.date_of_issue}</p>
                                             </div>
                                             <div className='invoice-client-name'>
-                                                <p>{invoice.clientName}</p>
+                                                <p>{invoice.client_name}</p>
                                             </div>
                                         </div>
                                         <div className='details2'>
                                             <div className='invoice-price'>
-                                                <p>${invoice.sumOfTotalPrice}</p>
+                                                <p>${invoice.items_total_price}</p>
                                             </div>
                                             {/* <div className='invoice-status paid'> */}
-                                            <div className={`invoice-status ${invoice.invoiceStatus.toLowerCase()}`}>
+                                            {/* <div className={`invoice-status ${setToLower(invoice.invoice_status)}`}> */}
+                                            <div className={`invoice-status ${!invoice == '' && invoice.invoice_status.toLowerCase()}`}>
                                                 <span className='dot'></span>
-                                                <p>{invoice.invoiceStatus}</p>
+                                                <p>{invoice.invoice_status}</p>
                                             </div>
                                             <img src='/starter-code/assets/icon-arrow-right.svg' /> 
                                         </div>

@@ -1,11 +1,19 @@
 import { useRef, useState, useEffect } from 'react';
 import './NewInvoice.scss'
 import axios from 'axios'
+import moment from 'moment'
+import { Navigate, useNavigate } from 'react-router-dom';
 
 let nextID = 0;
+let testdate =  moment().add(86, 'days').calendar();
+// let testdate1 = moment().format('LL').add(10, 'days').calendar()
+// console.log(testdate)
+let invoiceDate = moment().format('LL');   // April 16, 2023
 
 
-export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
+export default function NewInvoice({setIsDataFetched, invoiceFormState, newInvoice, formdata}) {
+    const navigate = useNavigate()
+
 
     const listItemElement = [
         {id: Math.floor(Math.random() * 1000000)}
@@ -36,10 +44,6 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
 
     }
 
-    const nameEl = [
-        {}
-    ]
-
     const [listel, setListel] = useState(itemsEl)
     // empty variables states
     const [streetAddress, setStreetAddress] = useState('')
@@ -52,8 +56,8 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
     const [clientCity, setClientCity] = useState('')
     const [clientPostCode, setClientPostCode] = useState('')
     const [clientCountry, setClientCountry] = useState('')
-    const [dateOfIssue, setDateOfIssue] = useState('')
-    const [termsOfPayment, setTermsOfPayment] = useState('Net 1 day')
+    // const [dateOfIssue, setDateOfIssue] = useState('')
+    const [termsOfPayment, setTermsOfPayment] = useState('1')
     const [projectDescription, setProjectDescription] = useState('')
 
     const [newInvoiceFormData, setNewInvoiceFormData] = useState([])
@@ -73,6 +77,8 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
     const [itemQty1Error, setItemQty1Error] = useState(false)
     const form = useRef(null)
     const [elName, setElName] = useState([])
+    const [invoiceStatus, setInvoiceStatus] = useState('')
+
 
     // const [newInvoiceFormData, setNewInvoiceFormData] = useState
     
@@ -108,6 +114,7 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
         setListel(newData)
     }
 
+    
     function handleInvoiceFormData(data) {
 
         let newdata = [...data]
@@ -142,8 +149,11 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
             sumOfTotalPrice = sumOfTotalPrice + element
         })
 
+        // let formattedDate = moment().format(dateOfIssue);
 
-        let invoiceStatus = 'Pending'
+
+        // let invoiceStatus = 'Pending'
+        let dueDate = moment().add(termsOfPayment, 'days').calendar();
 
         const invoicedata = 
             {
@@ -159,27 +169,30 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
                 clientCity: capitalizeFirstLetter(clientCity),
                 clientPostCode: clientPostCode,
                 clientCountry: setToUpperCase(clientCountry),
-                dateOfIssue: dateOfIssue,
-                termsOfPayment: termsOfPayment,
+                dateOfIssue: invoiceDate,
+                // termsOfPayment: dueDate,
+                termsOfPayment: '2023-01-01',
                 projectDescription: projectDescription,
-                listitems: listel,
+                listitems: JSON.stringify(listel),
                 sumOfTotalPrice: sumOfTotalPrice,
                 invoiceStatus: invoiceStatus
-            }
-        
+            }        
 
+        // console.log(JSON.stringify(listel))
         // console.log(invoicedata)
 
+        let invoicetestjson = JSON.stringify(invoicedata)
+        
+        formdata(invoicedata)
         // setNewInvoiceFormData([
         //     ...newInvoiceFormData,
         //     invoicedata
         // ])
 
-        axios.post('http://localhost/api/index.php', invoicedata)
-
-
-
-        formdata(invoicedata)
+        axios.post('http://localhost:80/api/', invoicetestjson).then(function(response) {
+            console.log(response.data)
+            setIsDataFetched(true)
+        })
 
     }
 
@@ -194,8 +207,6 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
 
     const handleNewInvoiceSubmit = (e) => {
         e.preventDefault()
-
-        console.log(termsOfPayment)
 
         if(streetAddress.length === 0) {
             setStreetAddressError(true)
@@ -227,11 +238,11 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
             setEmptyFieldError(true)
             return false;
         }
-        if(dateOfIssue.length === 0) {
-            setEmptyDateError(true)
-            setEmptyFieldError(true)
-            return false;
-        }
+        // if(dateOfIssue.length === 0) {
+        //     setEmptyDateError(true)
+        //     setEmptyFieldError(true)
+        //     return false;
+        // }
         if(projectDescription.length === 0) {
             setEmptyProjectDescriptionError(true)
             setEmptyFieldError(true)
@@ -243,7 +254,7 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
             return false;
         }
         
-        console.log('data submitted success')
+        // console.log('data submitted success')
         
         handleInvoiceFormData(listel)
         
@@ -266,9 +277,10 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
         setClientCity('')
         setClientPostCode('')
         setClientCountry('')
-        setDateOfIssue('')
-        setTermsOfPayment('Net 1 day')
+        // setDateOfIssue('')
+        setTermsOfPayment('1')
         setProjectDescription('')
+        setInvoiceStatus('')
     }
 
 
@@ -399,10 +411,16 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
                                                 <label className={`${emptyDateError ? 'label-error' : ''}`}>
                                                     Issue Date
                                                     <br/>
-                                                    <input type='date' className={`${emptyDateError ? 'input-error' : ''}`} onChange={(e) => {
-                                                        setEmptyDateError(false)
-                                                        setDateOfIssue(e.target.value)
-                                                    }} />
+                                                    <input 
+                                                    type='text' 
+                                                    value={invoiceDate}
+                                                    disabled
+                                                    // placeholder="yyyy-mm-dd"
+                                                    // className={`${emptyDateError ? 'input-error' : ''}`} onChange={(e) => {
+                                                    //     setEmptyDateError(false)
+                                                    //     setDateOfIssue(e.target.value)
+                                                    // }} 
+                                                    />
                                                 </label>
                                                 {emptyDateError && <p className='error-msg'>Can't be empty</p>}
                                             </div>
@@ -415,10 +433,10 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
                                                     onChange={(e) => {
                                                         setTermsOfPayment(e.target.value)
                                                     }} >
-                                                        <option value='Net 1 day'>Net 1 day</option>
-                                                        <option value='Net 7 days'>Net 7 days</option>
-                                                        <option value='Net 14 days'>Net 14 days</option>
-                                                        <option value='Net 30 days'>Net 30 days</option>
+                                                        <option value='1'>Net 1 day</option>
+                                                        <option value='7'>Net 7 days</option>
+                                                        <option value='14'>Net 14 days</option>
+                                                        <option value='30'>Net 30 days</option>
                                                     </select>
                                                 </label>
                                             </div>
@@ -567,8 +585,19 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata}) {
                                 Discard
                             </button>
                             <div className='draft-send'>
-                                <button className='draft'>Draft</button>
-                                <button className='send' type='submit'>Save & Send</button>
+                                <button 
+                                className='draft' 
+                                onClick={() => setInvoiceStatus('Draft')}
+                                >
+                                    Save as Draft
+                                </button>
+                                <button 
+                                className='send' 
+                                type='submit'
+                                onClick={() => setInvoiceStatus('Pending')}
+                                >
+                                    Save & Send
+                                </button>
                                 {/* <input className='send' type='submit' value='Save & Send' /> */}
                             </div>
                         </div>
