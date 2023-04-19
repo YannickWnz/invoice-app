@@ -25,6 +25,7 @@
             align-items: center;
 
             .invoice {
+                border: 1px solid white;
 
                 p {
                     margin-top: -10px;
@@ -37,6 +38,7 @@
 
                 
                 .filter-status {
+                    border: 1px solid white;
                     margin-right: 30px;
                     display: flex;
                     align-items: center;
