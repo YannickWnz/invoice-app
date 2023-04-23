@@ -50,8 +50,8 @@ function Home() {
             
             if(response.data.length !== 0) {
                 setInvoiceData(response.data)
-            }
-
+            } 
+            
             setIsDataFetched(false)
         })
     }
@@ -155,24 +155,24 @@ function Home() {
                                     <div className='invoice-box'>
                                         <div className='details1'>
                                             <div className='invoice-receipt-no'>
-                                                <p> <span>#</span>{invoice.receipt_number} </p>
+                                                <p> <span>#</span>{invoice.receiptNumber} </p>
                                             </div>
                                             <div className='invoice-due-date'>
-                                                <p>Due {invoice.date_of_issue}</p>
+                                                <p>Due {invoice.dateOfIssue}</p>
                                             </div>
                                             <div className='invoice-client-name'>
-                                                <p>{invoice.client_name}</p>
+                                                <p>{invoice.clientName}</p>
                                             </div>
                                         </div>
                                         <div className='details2'>
                                             <div className='invoice-price'>
-                                                <p>${invoice.items_total_price}</p>
+                                                <p>${invoice.itemsTotalPrice}</p>
                                             </div>
                                             {/* <div className='invoice-status paid'> */}
                                             {/* <div className={`invoice-status ${setToLower(invoice.invoice_status)}`}> */}
-                                            <div className={`invoice-status ${!invoice == '' && invoice.invoice_status.toLowerCase()}`}>
+                                            <div className={`invoice-status ${!invoice == '' && invoice.invoiceStatus.toLowerCase()}`}>
                                                 <span className='dot'></span>
-                                                <p>{invoice.invoice_status}</p>
+                                                <p>{invoice.invoiceStatus}</p>
                                             </div>
                                             <img src='/starter-code/assets/icon-arrow-right.svg' /> 
                                         </div>

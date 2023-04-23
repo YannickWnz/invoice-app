@@ -25,7 +25,6 @@
             align-items: center;
 
             .invoice {
-                border: 1px solid white;
 
                 p {
                     margin-top: -10px;
@@ -38,7 +37,6 @@
 
                 
                 .filter-status {
-                    border: 1px solid white;
                     margin-right: 30px;
                     display: flex;
                     align-items: center;
@@ -208,65 +206,20 @@
                         }
 
                         .invoice-status {
-
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            border-radius: 7px;
-                            z-index: 1;
-                            height: 40px;
-                            width: 100px;
-
-                            .dot {
-                                width: 10px;
-                                height: 10px;
-                                color: #33D69F;
-                                border-radius: 50%;
-                                margin-right: 10px;
-                            }
-                            
-                            p {
-                                font-weight: bold;
-                                z-index: 4;
-                            }
-
+                            @extend %invoice-status;
                         }
 
                         .paid {
-                            background-color: #33d6a019;
-
-                            .dot {
-                                background-color: #33D69F;
-                            }
-
-                            p {
-                                color: #33D69F;
-                            }
+                            @extend %paid;
 
                         }
 
                         .pending {
-                            background-color: #ff910024;
-
-                            .dot {
-                                background-color: #FF8F00;
-                            }
-
-                            p {
-                                color: #FF8F00;
-                            }
+                            @extend %pending;
                         }
 
                         .draft {
-                            background-color: #dfe3fa1f;
-
-                            .dot {
-                                background-color: #DFE3FA;
-                            }
-
-                            p {
-                                color: #DFE3FA;
-                            }
+                            @extend %draft;
                         }
 
                     }
