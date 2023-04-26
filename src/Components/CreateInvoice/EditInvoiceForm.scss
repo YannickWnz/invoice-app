@@ -1,0 +1,363 @@
+@import '/src/Components/Utilities/Utilities';
+
+
+.edit-invoice-form {
+    position: fixed;
+    left: 0;
+    width: 700px;
+    min-height: 100vh;
+    border-radius: 0 20px 20px 0;
+    background-color: whitesmoke;
+    background-color: $ebony-clay;
+    transform: translateX(-100%);
+    transition: all .5s ease-in-out;
+    z-index: 12;
+
+
+    .container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-end;
+        overflow: hidden;
+        color: white;
+        overflow-y: scroll;
+
+        form {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            overflow: hidden;
+            color: white;
+            overflow-y: scroll;
+        }
+
+        form::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        &-contents {
+            width: calc(100% - 100px);
+            height: inherit;
+            overflow-y: scroll;
+
+            .wrapper-contents {
+
+                h1 {
+                    padding-top: 40px;
+                }
+            }
+
+            .form-contents {
+                width: 100%;
+                margin-right: 20px;
+                overflow-y: scroll;
+
+                .errors-wrapper {
+                    width: 100%;
+
+                    p {
+                        color: $valentine-red;
+                        font-weight: initial;
+                    }
+                }
+
+
+                .form {
+                    width: 100%;
+                    min-height: inherit;
+                    padding: 10px 0 50px;
+
+                    p.error-msg {
+                        color: $valentine-red !important;
+                        position: absolute;
+                        font-weight: initial !important;
+                        font-size: .8em;
+                        right: 0;
+                        top: -10px;
+                    }
+
+                    .input-error {
+                        border: 1px solid $valentine-red !important;
+                    }
+
+                    .label-error {
+                        color: $valentine-red;
+                    }
+
+                    input {
+                        border: none;
+                        width: 100%;
+                        padding: 10px 5px;
+                        border-radius: 2px;
+                        background-color: #373B53;
+                        box-sizing: border-box;
+                        outline: none;
+                        color: white;
+                        font-weight: bold;
+                        border: .5px solid $regent-grey;
+                        margin-top: 10px;
+                    }
+
+                    .bill-from-section {
+
+                        p {
+                            color: $medium-slate-blue;
+                            font-weight: bold;
+                        }
+                    }
+
+                    .street-address-input {
+                        width: 100%;
+                        position: relative;
+
+                        input {
+                            width: 100%; 
+                        }
+
+                    }
+
+                    .city-pcode-country {
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+
+                        div {
+                            width: calc(100% / 3.3);
+                            margin: 20px 0;
+                            position: relative;
+
+                            input {
+                                width: 100%;
+                            }
+                        }
+
+                    }
+
+                    .bill-to-section {
+                        width: 100%;
+
+                        p {
+                            color: $medium-slate-blue;
+                            font-weight: bold;
+                        }
+
+                        div {
+                            position: relative;
+                        }
+
+                        .client-email {
+                            margin: 20px 0;
+                        }
+
+                        .date-issue-payment {
+                            width: 100%;
+                            display: flex;
+                            justify-content: space-between;
+                            margin: 5px 0 30px;
+
+                            div {
+                                width: calc(100% / 2.2);
+                                margin: 20px 0 0;
+
+                                input {
+                                    width: 100%;
+                                }
+                            }
+
+                            .payment-terms {
+                                
+                                select {
+                                    border: none;
+                                    width: 100%;
+                                    padding: 10px 5px;
+                                    border-radius: 2px;
+                                    background-color: #373B53;
+                                    box-sizing: border-box;
+                                    outline: none;
+                                    color: white;
+                                    font-weight: bold;
+                                    border: .5px solid $regent-grey;
+                                    margin-top: 10px;
+                                }
+                            }
+                        }
+
+                        .project-description {
+                            margin: 0 0 40px;
+                        }
+
+                        .item-list {
+
+                            h3 {
+                                color: $regent-grey;
+                                font-size: 1.5em;
+                            }
+
+                            .items {
+
+                                .list-name {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 15px;
+
+                                    p {
+                                        color: white;
+                                        font-weight: initial;
+                                    }
+
+                                    div:nth-child(1) {
+                                        flex: 4;
+                                    }
+                                    div:nth-child(2) {
+                                        flex: 1;
+                                    }
+                                    div:nth-child(3) {
+                                        flex: 2;
+                                    }
+                                    div:nth-child(4) {
+                                        flex: 2;
+                                    }
+                                    div:nth-child(5) {
+                                        flex: 1;
+                                    }
+                                }
+
+                                .inputs {
+                                    display: flex;
+                                    gap: 15px;
+                                    height: 60px;
+
+
+                                    .item-name-input {
+                                        flex: 4;
+                                    }
+                                    .item-qty-input {
+                                        flex: 1;
+                                    }
+                                    .item-price-input {
+                                        flex: 2;
+                                    }
+                                    .item-total-price {
+                                        flex: 2;
+                                        display: flex;
+                                        align-items: center;
+                                        padding: 10px 0;
+                                        display: flex;
+                                        align-items: center;
+                                        
+                                        p {
+                                            color: white;
+                                        }
+
+                                    }
+                                    .item-delete-icon {
+                                        flex: 1;
+                                        padding: 10px 0;
+                                        display: flex; 
+                                        align-items: center;
+                                        cursor: pointer;
+                                    }
+
+
+                                }
+
+                                .add-new-invoice {
+                                    width: 100%;
+                                    padding: 12px 5px;
+                                    border-radius: 20px;
+                                    cursor: pointer;
+                                    border: none;
+                                    color: $link-water;
+                                    font-weight: bold;
+                                    background: #373B53;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            .form-contents::-webkit-scrollbar {
+                display: none;
+            }
+
+            .wrapper-contents::-webkit-scrollbar {
+                display: none;
+            }
+
+
+        }
+        &-contents::-webkit-scrollbar {
+            display: none;
+        }
+
+        .buttons-wrapper {
+            width: calc(100% - 100px);
+            height: 100px;
+
+            .wrapper-contents {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                button {
+                    border: none;
+                    font-weight: bold;
+                    border-radius: 30px;
+                    padding: 12px 25px;
+                    cursor: pointer;
+                }
+
+                .discard {
+                    background-color: $white-lilac;
+                    color: $regent-grey;
+                }
+
+                .draft {
+                    margin-right: 10px;
+                    background-color: #373B53;
+                    color: $regent-grey;
+                }
+                .send {
+                    background-color: $medium-slate-blue;
+                    color: white;
+                }
+
+            }
+
+        }
+
+        .wrapper-contents {
+            width: 100%;
+            max-width: 85%;
+            height: 100%;
+            margin: auto;
+        }
+
+    }
+
+    .container::-webkit-scrollbar {
+        display: none;
+    }
+
+
+}
+
+.show {
+    transform: translateX(0);
+    transition: all .5s ease-in-out;
+}
+
