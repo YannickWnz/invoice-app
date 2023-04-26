@@ -1,23 +1,29 @@
-# develop full design ❗️
+# re-work on db design ✅
 
-# login/register
+# submit due dates ❗️
 
-# create invoices 
+# terms of payment should be saved and due dates should be different ❗️
 
-# filter invoice by status feature ❗️
+# mark invoice as paid feature ❗️
 
-# work on form submission
+# show confirmation notification when invoice is marked as paid before redirecting user to home ❗️
 
-# read invoices
+# delete invoices ❗️
 
-# update invoices
+# update invoices ❗️
 
-# delete invoices
+# login/register ❗️
 
-# Receive form validations when trying to create/edit an invoice
+# develop full design ✅
 
-# Save draft invoices, and mark pending invoices as paid
+# create invoices ✅
 
-# Filter invoices by status (draft/pending/paid)
+# filter invoice by status feature ✅
 
-# Toggle light and dark mode
+# work on form submission ✅
+
+# read invoices ✅
+
+# Receive form validations when creating/editing an invoice
+
+# Toggle light and dark mode ??

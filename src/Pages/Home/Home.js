@@ -1,8 +1,9 @@
 import './Home.scss'
 import {Link} from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import NewInvoice from '../../Components/CreateInvoice/NewInvoice'
 import axios from 'axios'
+import ThemeContext from '../../context/Context'
 
 function Home() {
 
@@ -19,8 +20,8 @@ function Home() {
         {id: 3, status: 'Paid'}
     ]
 
-    const emptyInvoice = [{}]
 
+    const {isDataFetched, setIsDataFetched} = useContext(ThemeContext)
     // const [invoices, setInvoices] = useState([])
     const [invoices, setInvoices] = useState(invoiceBox)
     const [selectedStatus, setSelectedStatus] = useState([])
@@ -29,7 +30,7 @@ function Home() {
     const [filterBox, setFilterBox] = useState(false)
     // const [invoiceData, setInvoiceData] = useState([])
     const [invoiceData, setInvoiceData] = useState([])
-    const [isDataFetched, setIsDataFetched] = useState(false)
+    // const [isDataFetched, setIsDataFetched] = useState(false)
 
 
     const handleFormData = (data) => {
@@ -41,17 +42,14 @@ function Home() {
 
     function getInvoiceFromDB() {
         axios.get('http://localhost:80/api/').then(function(response) {
-
-            // if(response.data.length === 0) {
-            //     setInvoiceData([])
-            // } else if(response.data.length > 0){
-            //     setInvoiceData(response.data)
-            // }
+            console.log(response.data)
             
-            if(response.data.length !== 0) {
+            if(!Array.isArray(response.data)) {
+                console.log(response.data)
+            } else {
                 setInvoiceData(response.data)
-            } 
-            
+            }
+
             setIsDataFetched(false)
         })
     }
@@ -78,7 +76,7 @@ function Home() {
 
     return (
         <div className="home" >
-            <NewInvoice setIsDataFetched={setIsDataFetched} invoiceFormState={handleInvoiceFormState} newInvoice={newInvoiceForm} formdata={handleFormData} />
+            <NewInvoice invoiceFormState={handleInvoiceFormState} newInvoice={newInvoiceForm} formdata={handleFormData} />
 
             <div className='home-container' >
                 <div className='header'>
@@ -148,8 +146,8 @@ function Home() {
                             <p>Create an invoive by clicking the <b>New invoice</b> button and get started</p>
                         </div>
                     </div>}
-                    {invoiceData.length > 0 && <div className='user-invoices'>
-                        {invoiceData.length > 0 && invoiceData.map(invoice => {
+                    {invoiceData && invoiceData.length > 0 && <div className='user-invoices'>
+                        {invoiceData && invoiceData.length > 0 && invoiceData.map(invoice => {
                             return (
                                 <Link key={invoice.invoiceID} to={`/invoice/${invoice.invoiceID}`}>
                                     <div className='invoice-box'>

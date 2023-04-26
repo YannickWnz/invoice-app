@@ -13,11 +13,13 @@ function Invoice() {
   const [fetchError, setFetchError] = useState('')
   const [showInvoiceForm, setShowInvoiceForm] = useState(false)
   const [fetchedItems, setFetchedItems] = useState([])
+  const [itemList, setItemList] = useState([])
   
   
   const handleShowInvoiceForm = () => {
     setShowInvoiceForm(!showInvoiceForm)
   }
+
 
   if (id && typeof(id) !== 'number') {
     // console.log('Could not find invoice')
@@ -43,6 +45,7 @@ function Invoice() {
         console.log(response.data)
         let parsedItemsList = JSON.parse(response.data[0].item_list)
         setFetchedItems(parsedItemsList)
+        setItemList(parsedItemsList)
         // console.log(fetchedItems)
         // console.log(parsedItemsList)
       } 
@@ -148,7 +151,7 @@ function Invoice() {
                     <p>Total</p>
                   </div>
                 </div>
-                {fetchedItems.length > 0 && fetchedItems.map((item) => {return <div key={item.id} className='items-details'>
+                {itemList.length > 0 && itemList.map((item) => {return <div key={item.id} className='items-details'>
                   <div className='items'>
                     {/* <p>Banner Design</p> */}
                     {/* <p>Banner Design</p> */}
