@@ -235,15 +235,6 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
                 setIsDataFetched(true)
             })
         } else {
-            // console.log(streetAddress)
-            // console.log(countryBillFrom)
-            // console.log(cityBillFrom)
-            // console.log(clientName)
-            // console.log(clientEmail)
-            // console.log(termsOfPayment)
-            // console.log(dueDate)
-
-
             const edittedInvoiceData = {
                 invoiceID: fetchedInvoiceData[0].invoiceID,
                 billFromStreetAddress: streetAddress,

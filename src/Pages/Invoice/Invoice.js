@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import './Invoice.scss'
 import axios from 'axios'
 import NewInvoice from '../../Components/CreateInvoice/NewInvoice'
@@ -14,18 +14,14 @@ function Invoice() {
   const [showInvoiceForm, setShowInvoiceForm] = useState(false)
   const [fetchedItems, setFetchedItems] = useState([])
   const [itemList, setItemList] = useState([])
+  const navigate = useNavigate()
+
   
   
   const handleShowInvoiceForm = () => {
     setShowInvoiceForm(!showInvoiceForm)
   }
 
-
-  if (id && typeof(id) !== 'number') {
-    // console.log('Could not find invoice')
-    // setFetchError('')
-    // setFetchError('Could not find invoice')
-  }
 
   useEffect(() => {
     getSelectedInvoice()
@@ -34,7 +30,6 @@ function Invoice() {
   function getSelectedInvoice() {
 
     axios.get(`http://localhost:80/api/fetchSelectedInvoice.php/${id}`).then(function(response) {
-      // console.log(response.data)
       
       if(response.data == 'error') {
         console.log('could not find invoice')
@@ -42,20 +37,36 @@ function Invoice() {
       } else {
         setFetchedInvoiceData(response.data)
         setFetchError('')
-        console.log(response.data)
+        // console.log(response.data)
         let parsedItemsList = JSON.parse(response.data[0].item_list)
         setFetchedItems(parsedItemsList)
         setItemList(parsedItemsList)
-        // console.log(fetchedItems)
-        // console.log(parsedItemsList)
       } 
 
     })
 
   }
 
-  // const handleEditFormSubmit = () => {}
+  const deleteInvoice = id => {
 
+    axios.delete(`http://localhost:80/api/${id}`).then(function(response) {
+      console.log(response.data)
+      if(response.data !== 'error') {
+        navigate('/');
+      }
+    })
+
+  }
+
+  const updateInvoiceStatus = id => {
+
+    axios.put(`http://localhost:80/api/${id}`).then(function(response) {
+        console.log(response.data)
+        navigate('/');
+
+    })
+
+  }
 
   return (
     <div className='selected-invoice'>
@@ -90,10 +101,10 @@ function Invoice() {
                 <button onClick={handleShowInvoiceForm}>Edit</button>
               </div>
               <div className='delete'>
-                <button>Delete</button>
+                <button onClick={() => deleteInvoice(fetcheddata.invoiceID)}>Delete</button>
               </div>
               <div className='mark-paid'>
-                <button>Mark Paid</button>
+                <button onClick={() => updateInvoiceStatus(fetcheddata.invoiceID)}>Mark Paid</button>
               </div>
             </div>
           </div>})}
@@ -116,19 +127,20 @@ function Invoice() {
               <div className='dates-section'>
                 <div className='invoice-date'>
                   <p>Invoice Date</p>
-                  <p>21 August 2021</p>
+                  <p>{fetcheddata.dateOfIssue}</p>
                 </div>
                 <div className='due-date'>
                   <p>Payment Due</p>
-                  <p>20 Sept 2021</p>
+                  <p>{fetcheddata.dueDate}</p>
                 </div>
               </div>
               <div className='bill-to-section'>
                 <p>Bill To</p>
                 <p>{fetcheddata.clientName}</p>
-                <p>84 Church Way</p>
-                <p>BD1 9BP</p>
-                <p>Togo</p>
+                <p>{fetcheddata.clientAddress}</p>
+                <p>{fetcheddata.clientCity}</p>
+                <p>{fetcheddata.clientPostCode}</p>
+                <p>{fetcheddata.clientCountry}</p>
               </div>
               <div className='sent-to-section'>
                 <p>Sent To</p>

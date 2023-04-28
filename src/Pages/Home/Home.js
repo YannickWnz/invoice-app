@@ -42,7 +42,7 @@ function Home() {
 
     function getInvoiceFromDB() {
         axios.get('http://localhost:80/api/').then(function(response) {
-            console.log(response.data)
+            // console.log(response.data)
             
             if(!Array.isArray(response.data)) {
                 console.log(response.data)
