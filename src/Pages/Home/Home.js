@@ -1,5 +1,5 @@
 import './Home.scss'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import { useEffect, useState, useContext } from 'react'
 import NewInvoice from '../../Components/CreateInvoice/NewInvoice'
 import axios from 'axios'
@@ -31,6 +31,15 @@ function Home() {
     // const [invoiceData, setInvoiceData] = useState([])
     const [invoiceData, setInvoiceData] = useState([])
     // const [isDataFetched, setIsDataFetched] = useState(false)
+    const navigate = useNavigate()
+    const [userToken, setUserToken] = useState('')
+
+    // const value = localStorage.getItem('token');
+    // if(!value) {
+    //     navigate('/login')
+    // } else {
+    //     setUserToken(value)
+    // }
 
 
     const handleFormData = (data) => {
