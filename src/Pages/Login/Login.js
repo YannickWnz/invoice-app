@@ -48,7 +48,7 @@ function Login() {
         }
 
         axios.post(`http://localhost:80/api/fetchUser.php`, userLoginData).then(function(response) {
-            console.log(response.data)
+            // console.log(response.data)
 
             if(response.data == 'error') {
                 setError('Invalid username or password')

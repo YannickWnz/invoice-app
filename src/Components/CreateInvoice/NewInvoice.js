@@ -200,6 +200,7 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
 
         // let invoiceStatus = 'Pending'
         let dueDate = moment().add(termsOfPayment, 'days').calendar();
+        const token = localStorage.getItem('token');
 
         if(!showInvoiceForm) {
             const invoicedata = 
@@ -223,7 +224,8 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
                     projectDescription: projectDescription,
                     listitems: JSON.stringify(listel),
                     sumOfTotalPrice: sumOfTotalPrice,
-                    invoiceStatus: invoiceStatus
+                    invoiceStatus: invoiceStatus,
+                    token: token
                 }        
     
             let jsonInvoiceData = JSON.stringify(invoicedata)
@@ -252,7 +254,8 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
                 // listitems: 'JSON.stringify(fetchedItems)',
                 sumOfTotalPrice: sumOfTotalPrice,
                 dueDate: dueDate,
-                termsOfPayment: termsOfPayment
+                termsOfPayment: termsOfPayment,
+                token: token
             }
 
             let jsonEdittedInvoiceData = JSON.stringify(edittedInvoiceData)

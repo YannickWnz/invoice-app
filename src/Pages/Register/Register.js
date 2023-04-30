@@ -62,17 +62,18 @@ function Register() {
             username: userData.username,
             email: userData.email,
             password: userData.password,
-            token:  generateUniqueToken(10)
+            // token:  generateUniqueToken(10)
         }
 
         // send user data to server
         axios.post(`http://localhost:80/api/insertUser.php`, data).then(function(response) {
-            console.log(response.data)
-            if(response.data !== 'success') {
-                setError(response.data)
-            } else {
-                saveToLocalStorage('token', data.token)
+            // console.log(response.data)
+            if(response.data !== 'error') {
+                saveToLocalStorage('token', response.data)
                 navigate('/')
+            } else {
+                setError('An error occurred')
+                // console.log(response.data)
             }
         })
 
