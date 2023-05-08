@@ -1,0 +1,75 @@
+@import '/src/Components/Utilities/Utilities';
+
+.user-profile {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 31;
+    display: none;
+
+    .profile-details-wrapper {
+        width: 100%;
+        max-width: 400px;
+        min-height: 250px;
+        margin: auto;
+        border: 1px solid $regent-grey;
+        margin-top: 100px;
+        background-color: $cinder;
+        border-radius: 7px;
+        padding: 0px 20px;
+
+        h1 {
+            color: white;
+        }
+
+        .user-details {
+            width: 100%;
+            min-height: 120px;
+            // border: 1px solid white;
+            color: white;
+            // display: flex;
+            // flex-direction: column;
+            // justify-content: center;
+
+            span {
+                font-weight: bold;
+            }
+
+            p {
+                font-size: 1.2em;
+            }
+        }
+
+        .btn-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            button {
+                cursor: pointer;
+                padding: 10px 20px;
+                border: none;
+                color: white;
+                background-color: $valentine-red;
+                border-radius: 3px;
+                font-weight: bold;
+            }
+            button:nth-child(2) {
+                cursor: pointer;
+                padding: 10px 20px;
+                border: none;
+                color: white;
+                background-color: $regent-grey;
+                border-radius: 3px;
+                font-weight: bold;
+            }
+        }
+
+    }
+
+}
+
+.show-profile {
+    display: block !important;
+}
