@@ -4,7 +4,6 @@ import {useState} from 'react'
 import axios from 'axios'
 
 function Login() {
-    
 
     const [userData, setUserData] = useState({
         username:'',
@@ -22,7 +21,6 @@ function Login() {
     const [textType, setTextType] = useState(false)
     const [error, setError] = useState('')
     const navigate = useNavigate()
-
 
     const handlePasswordType = () => {
         setTextType(!textType)
@@ -48,7 +46,6 @@ function Login() {
         }
 
         axios.post(`http://localhost:80/api/fetchUser.php`, userLoginData).then(function(response) {
-            // console.log(response.data)
 
             if(response.data == 'error') {
                 setError('Invalid username or password')
@@ -59,14 +56,7 @@ function Login() {
 
         })
 
-
-        // setUserData({
-        //     username: '',
-        //     password: ''
-        // })
-
         resetForm()
-
     }
 
      // function saving user token in local storage after registration is successful

@@ -4,8 +4,10 @@ import { useEffect, useState, useContext } from 'react'
 import NewInvoice from '../../Components/CreateInvoice/NewInvoice'
 import axios from 'axios'
 import ThemeContext from '../../context/Context'
+import UserProfile from '../../Components/UserProfile/UserProfile'
 
-function Home() {
+function Home({test}) {
+    // console.log(test)
 
     const invoiceBox = [
         { receiptNo: 'RT545', date: '19 Aug 2023', clientName: 'Jason Kidd', price: '356.00', status: 'Paid'},
@@ -20,11 +22,12 @@ function Home() {
         {id: 3, status: 'Paid'}
     ]
 
+    const [filters, setFilters] = useState({ draft: false, pending: false, paid: false });
 
     const {isDataFetched, setIsDataFetched} = useContext(ThemeContext)
     // const [invoices, setInvoices] = useState([])
     const [invoices, setInvoices] = useState(invoiceBox)
-    const [selectedStatus, setSelectedStatus] = useState([])
+    // const [selectedStatus, setSelectedStatus] = useState([])
     const [newInvoiceForm, setNewInvoiceForm] = useState(false)
     const [newInvoiceFormData, setNewInvoiceFormData] = useState([])
     const [filterBox, setFilterBox] = useState(false)
@@ -33,14 +36,32 @@ function Home() {
     // const [isDataFetched, setIsDataFetched] = useState(false)
     const navigate = useNavigate()
     const [userToken, setUserToken] = useState('')
+    const [selectedStatus, setSelectedStatus] = useState([]);
+    const [isChecked, setIsChecked] = useState(false)
 
-    // const value = localStorage.getItem('token');
-    // if(!value) {
-    //     navigate('/login')
-    // } else {
-    //     setUserToken(value)
-    // }
 
+    function capitalizeFirstLetter(string) {
+        let stringtoLower = string.toLowerCase()
+        return stringtoLower.charAt(0).toUpperCase() + stringtoLower.slice(1);
+    }
+
+    // function handling checkbox to filter invoices by status  START
+    const handleCheckboxChange = (event) => {
+
+        const {name, checked} = event.target
+
+        setIsChecked(checked)
+
+        if(checked) {
+            const filtered = invoiceData.filter((invoice) => {
+                return invoice.invoiceStatus === capitalizeFirstLetter(name);
+            });
+            setSelectedStatus(filtered);
+        } else {
+            setSelectedStatus([])
+        }
+    };
+    // function handling checkbox to filter invoices by status  END
 
     const handleFormData = (data) => {
         setNewInvoiceFormData([
@@ -49,7 +70,8 @@ function Home() {
         ])
     }
 
-    function getInvoiceFromDB() {
+    // function fetching user's invoices data START 
+    async function getInvoiceFromDB() {
 
         const token = localStorage.getItem('token');
         // const token = localStorage.getItem('token');
@@ -69,6 +91,7 @@ function Home() {
     useEffect(() => {
         getInvoiceFromDB()
     }, [isDataFetched])
+    // function fetching user's invoices data END 
 
 
     const handleFilterBoxState = () => {
@@ -79,13 +102,9 @@ function Home() {
         setNewInvoiceForm(state);
     }
 
-    const filterInvoices = (status) => {
-        setNewInvoiceFormData((prev) => {
-            return prev.filter(invoice => {
-                return invoice.invoiceStatus == status
-            })
-        })
-    }
+
+    const invoicesToDisplay = isChecked ? selectedStatus : invoiceData;
+
 
     return (
         <div className="home" >
@@ -95,7 +114,7 @@ function Home() {
                 <div className='header'>
                     <div className='invoice'>
                         <h1>Invoices</h1>
-                        {invoiceData.length > 0 ? <p>There are {invoiceData.length} total invoices</p> : <p>No invoices</p>}
+                        {invoicesToDisplay.length > 0 ? <p>There are {invoicesToDisplay.length} total invoices</p> : <p>No invoices</p>}
                     </div>
                     <div className='status'>
                         <div className='filter-status'>
@@ -109,12 +128,7 @@ function Home() {
                                         return (
                                             <div key={status.id} className='status-checkbox'>
                                                 <label onChange={(e) => {
-                                                    if(e.target.checked) {
-                                                        filterInvoices(status.status)
-                                                    } else {
-                                                        setInvoices(newInvoiceFormData)
-                                                    }
-
+                                                    handleCheckboxChange(e)
                                                 }}>
                                                     <input type='checkbox' name={`${status.status.toLowerCase()}`} />
                                                     {status.status}
@@ -122,24 +136,6 @@ function Home() {
                                             </div>
                                         )
                                     })}
-                                    {/* <div className='pending-checkbox'>
-                                        <label>
-                                            <input type='checkbox' onChange={(e) => {
-                                                if(e.target.checked) {
-                                                    filterInvoices('Pending')
-                                                } else {
-                                                    setInvoices(invoiceBox)
-                                                }
-                                            }} />
-                                            Pending
-                                        </label>
-                                    </div> */}
-                                    {/* <div className='paid-checkbox'>
-                                        <label>
-                                            <input type='checkbox' />
-                                            Paid
-                                        </label>
-                                    </div> */}
                                 </form>
                             </div>}
                         </div>
@@ -152,15 +148,17 @@ function Home() {
                     </div>
                 </div>
                 <div className='invoices-wrapper'>
-                    {invoiceData.length === 0 && <div className='zero-invoices-section' >
+                    {invoicesToDisplay.length === 0 && <div className='zero-invoices-section'>
                         <img src='/starter-code/assets/illustration-empty.svg' />
                         <div className='text-content'>
                             <h2>There is nothing here</h2>
                             <p>Create an invoive by clicking the <b>New invoice</b> button and get started</p>
                         </div>
                     </div>}
-                    {invoiceData && invoiceData.length > 0 && <div className='user-invoices'>
-                        {invoiceData && invoiceData.length > 0 && invoiceData.map(invoice => {
+                    {invoicesToDisplay && invoicesToDisplay.length > 0 && <div className='user-invoices'>
+                    {/* {filteredInvoices && filteredInvoices.length > 0 && <div className='user-invoices'> */}
+                        {invoicesToDisplay && invoicesToDisplay.length > 0 && invoicesToDisplay.map(invoice => {
+                        // {filteredInvoices && filteredInvoices.length > 0 && filteredInvoices.map(invoice => {
                             return (
                                 <Link key={invoice.invoiceID} to={`/invoice/${invoice.invoiceID}`}>
                                     <div className='invoice-box'>
@@ -169,7 +167,7 @@ function Home() {
                                                 <p> <span>#</span>{invoice.receiptNumber} </p>
                                             </div>
                                             <div className='invoice-due-date'>
-                                                <p>Due {invoice.dateOfIssue}</p>
+                                                <p>Due {invoice.dueDate}</p>
                                             </div>
                                             <div className='invoice-client-name'>
                                                 <p>{invoice.clientName}</p>
