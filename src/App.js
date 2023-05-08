@@ -11,20 +11,30 @@ import { ThemeProvider } from './context/Context';
 import NotFound from './Pages/404/NotFound';
 import Register from './Pages/Register/Register';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import UserProfile from './Components/UserProfile/UserProfile';
 
 function App() {
+
+  // console.log('yooo')
+  const [test, setTest] = useState(false)
+
+  function handlesettest() {
+    setTest(!test)
+  }
+
   return (
     <ThemeProvider> 
       <div className="App">
         {/* <h1>whats poppin homeboy</h1> */}
-        <Navbar />
+        <Navbar setTest={handlesettest} />
+        <UserProfile test={test} handlesettest={handlesettest} />
         {/* <CreateInvoice /> */}
         {/* <NewInvoice /> */}
         <Router>
           <Routes>
             <Route path='/' element={
               <PrivateRoute>
-                <Home />
+                <Home test={test} />
               </PrivateRoute>
             } ></Route>
             <Route path='/invoice/:id' element={

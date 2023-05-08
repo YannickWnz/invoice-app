@@ -149,7 +149,7 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
     }
 
     
-    function handleInvoiceFormData(data) {
+    async function handleInvoiceFormData(data) {
         // console.log('handle function data clicked')
         // console.log(data)
 

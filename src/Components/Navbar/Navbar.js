@@ -1,6 +1,15 @@
+import { useState } from 'react'
 import './Navbar.scss'
 
-export default function Navbar() {
+export default function Navbar({setTest}) {
+
+    const [userSetting, setUserSetting] = useState(false);
+
+    const handleUserSetting = () => {
+        setUserSetting(!userSetting)
+        console.log(userSetting)
+    }
+
     return (
         <div className="navbar">
             {/* <div className='navbar-container'></div> */}
@@ -17,8 +26,16 @@ export default function Navbar() {
                         <i className="fa-solid fa-sun"></i>
                     </div>
                 </div>
-                <div className='user-setting-section'>
-                    <div className='avatar'></div>
+                <div 
+                className='user-setting-section'
+                onClick={() => {
+                    handleUserSetting()
+                    setTest()
+                }}
+                >
+                    <div className='avatar'>
+                        <i className="fa-solid fa-user"></i>
+                    </div>
                 </div>
             </div>
         </div>
