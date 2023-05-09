@@ -34,7 +34,7 @@ function App() {
           <Routes>
             <Route path='/' element={
               <PrivateRoute>
-                <Home test={test} />
+                <Home />
               </PrivateRoute>
             } ></Route>
             <Route path='/invoice/:id' element={

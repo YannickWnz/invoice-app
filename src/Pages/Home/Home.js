@@ -6,7 +6,7 @@ import axios from 'axios'
 import ThemeContext from '../../context/Context'
 import UserProfile from '../../Components/UserProfile/UserProfile'
 
-function Home({test}) {
+function Home() {
     // console.log(test)
 
     const invoiceBox = [
@@ -22,18 +22,12 @@ function Home({test}) {
         {id: 3, status: 'Paid'}
     ]
 
-    const [filters, setFilters] = useState({ draft: false, pending: false, paid: false });
-
     const {isDataFetched, setIsDataFetched} = useContext(ThemeContext)
-    // const [invoices, setInvoices] = useState([])
     const [invoices, setInvoices] = useState(invoiceBox)
-    // const [selectedStatus, setSelectedStatus] = useState([])
     const [newInvoiceForm, setNewInvoiceForm] = useState(false)
     const [newInvoiceFormData, setNewInvoiceFormData] = useState([])
     const [filterBox, setFilterBox] = useState(false)
-    // const [invoiceData, setInvoiceData] = useState([])
     const [invoiceData, setInvoiceData] = useState([])
-    // const [isDataFetched, setIsDataFetched] = useState(false)
     const navigate = useNavigate()
     const [userToken, setUserToken] = useState('')
     const [selectedStatus, setSelectedStatus] = useState([]);
@@ -76,7 +70,7 @@ function Home({test}) {
         const token = localStorage.getItem('token');
         // const token = localStorage.getItem('token');
 
-        axios.get(`http://localhost:80/api/${token}`).then(function(response) {
+        await axios.get(`http://localhost:80/api/${token}`).then(function(response) {
             // console.log(response.data)
             
             if(!Array.isArray(response.data)) {
@@ -156,9 +150,7 @@ function Home({test}) {
                         </div>
                     </div>}
                     {invoicesToDisplay && invoicesToDisplay.length > 0 && <div className='user-invoices'>
-                    {/* {filteredInvoices && filteredInvoices.length > 0 && <div className='user-invoices'> */}
                         {invoicesToDisplay && invoicesToDisplay.length > 0 && invoicesToDisplay.map(invoice => {
-                        // {filteredInvoices && filteredInvoices.length > 0 && filteredInvoices.map(invoice => {
                             return (
                                 <Link key={invoice.invoiceID} to={`/invoice/${invoice.invoiceID}`}>
                                     <div className='invoice-box'>
@@ -177,8 +169,6 @@ function Home({test}) {
                                             <div className='invoice-price'>
                                                 <p>${invoice.itemsTotalPrice}</p>
                                             </div>
-                                            {/* <div className='invoice-status paid'> */}
-                                            {/* <div className={`invoice-status ${setToLower(invoice.invoice_status)}`}> */}
                                             <div className={`invoice-status ${!invoice == '' && invoice.invoiceStatus.toLowerCase()}`}>
                                                 <span className='dot'></span>
                                                 <p>{invoice.invoiceStatus}</p>
@@ -189,31 +179,6 @@ function Home({test}) {
                                 </Link> 
                             )
                         }) }
-                        {/* <Link to='/invoice/12'>
-                            <div className='invoice-box'>
-                                <div className='details1'>
-                                    <div className='invoice-receipt-no'>
-                                        <p> <span>#</span>RT3080 </p>
-                                    </div>
-                                    <div className='invoice-due-date'>
-                                        <p>Due 19 Aug 2021</p>
-                                    </div>
-                                    <div className='invoice-client-name'>
-                                        <p>Jensen Huang</p>
-                                    </div>
-                                </div>
-                                <div className='details2'>
-                                    <div className='invoice-price'>
-                                        <p>$334.40</p>
-                                    </div>
-                                    <div className='invoice-status paid'>
-                                        <span className='dot'></span>
-                                        <p>Paid</p>
-                                    </div>
-                                    <img src='/starter-code/assets/icon-arrow-right.svg' /> 
-                                </div>
-                            </div>
-                        </Link> */}
                     </div>}
                 </div>
             </div>

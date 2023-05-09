@@ -27,9 +27,9 @@ function Invoice() {
     getSelectedInvoice()
   }, [])
 
-  function getSelectedInvoice() {
+  async function getSelectedInvoice() {
 
-    axios.get(`http://localhost:80/api/fetchSelectedInvoice.php/${id}`).then(function(response) {
+    await axios.get(`http://localhost:80/api/fetchSelectedInvoice.php/${id}`).then(function(response) {
       
       if(response.data == 'error') {
         console.log('could not find invoice')
@@ -47,9 +47,9 @@ function Invoice() {
 
   }
 
-  const deleteInvoice = id => {
+  const deleteInvoice = async id => {
 
-    axios.delete(`http://localhost:80/api/${id}`).then(function(response) {
+    await axios.delete(`http://localhost:80/api/${id}`).then(function(response) {
       console.log(response.data)
       if(response.data !== 'error') {
         navigate('/');
@@ -58,9 +58,9 @@ function Invoice() {
 
   }
 
-  const updateInvoiceStatus = id => {
+  const updateInvoiceStatus = async id => {
 
-    axios.put(`http://localhost:80/api/${id}`).then(function(response) {
+    await axios.put(`http://localhost:80/api/${id}`).then(function(response) {
         console.log(response.data)
         navigate('/');
 

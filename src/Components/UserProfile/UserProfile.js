@@ -12,7 +12,7 @@ export default function UserProfile({test, handlesettest}) {
         const token = localStorage.getItem("token");
         // console.log(token)
 
-        axios.get(`http://localhost:80/api/fetchUserData.php/${token}`).then(function(response) {
+        await axios.get(`http://localhost:80/api/fetchUserData.php/${token}`).then(function(response) {
             // console.log(response.data)
             // console.log(loginUserData)
             

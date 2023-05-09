@@ -232,7 +232,7 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
             
             formdata(invoicedata)
     
-            axios.post('http://localhost:80/api/', jsonInvoiceData).then(function(response) {
+            await axios.post('http://localhost:80/api/', jsonInvoiceData).then(function(response) {
                 console.log(response.data)
                 setIsDataFetched(true)
             })
@@ -260,7 +260,7 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
 
             let jsonEdittedInvoiceData = JSON.stringify(edittedInvoiceData)
 
-            axios.put('http://localhost:80/api/', jsonEdittedInvoiceData).then(function(response) {
+            await axios.put('http://localhost:80/api/', jsonEdittedInvoiceData).then(function(response) {
                 console.log(response.data)
                 setIsDataFetched(true)
             })
