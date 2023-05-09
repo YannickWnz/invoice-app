@@ -7,7 +7,6 @@ export default function Navbar({setTest}) {
 
     const handleUserSetting = () => {
         setUserSetting(!userSetting)
-        console.log(userSetting)
     }
 
     return (

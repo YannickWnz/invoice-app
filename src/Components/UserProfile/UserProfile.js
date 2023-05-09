@@ -50,13 +50,13 @@ export default function UserProfile({test, handlesettest}) {
                 </div>})}
                 <div className='btn-wrapper'>
                     <button
+                    onClick={handlesettest}
+                    >CANCEL</button>
+                    <button
                     onClick={logUserOut}
                     >
                         LOGOUT
                     </button>
-                    <button
-                    onClick={handlesettest}
-                    >CANCEL</button>
                 </div>
             </div>
         </div>
