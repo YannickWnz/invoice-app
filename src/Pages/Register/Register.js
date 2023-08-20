@@ -67,6 +67,7 @@ function Register() {
 
         // send user data to server
         axios.post(`http://localhost:80/api/insertUser.php`, data).then(function(response) {
+        // axios.post(`https://api.invoice-app.xyz/api/insertUser.php`, data).then(function(response) {
             // console.log(response.data)
             if(response.data !== 'error') {
                 saveToLocalStorage('token', response.data)

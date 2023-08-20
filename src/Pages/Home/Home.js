@@ -71,6 +71,7 @@ function Home() {
         // const token = localStorage.getItem('token');
 
         await axios.get(`http://localhost:80/api/${token}`).then(function(response) {
+        // await axios.get(`https://api.invoice-app.xyz/api/${token}`).then(function(response) {
             // console.log(response.data)
             
             if(!Array.isArray(response.data)) {
