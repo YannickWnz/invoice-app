@@ -120,6 +120,11 @@ function Login() {
                         {/* <p>Invalid email format</p> */}
                         {error && <p>{error}</p>}
                     </div>
+                    <div className='test-msg'>
+                        <p>Testing the app ? Use these credentials </p>
+                        <p>username: admin </p>
+                        <p>password: 123456 </p>
+                    </div>
                 </form>
                 <div className='login-redirect'>
                     <p>Don't have an account ?</p>

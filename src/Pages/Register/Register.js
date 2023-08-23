@@ -9,6 +9,9 @@ function Register() {
 
     const letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z", "a","b","c","d","e","f","g","h", "i","j","k","l","m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
+    axios.defaults.withCredentials = true
+
+    console.log('register')
 
     // setting empty input names
     const [userData, setUserData] = useState({
@@ -36,6 +39,20 @@ function Register() {
 
     }
 
+    const registerUser = async () => {
+
+        try {
+            
+            const res = await axios.post('http://localhost:1556/signup', userData)
+            
+            console.log(res.data)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     // functions handling form submission START
     const handleRegisterUser = (e) => {
         e.preventDefault();
@@ -58,27 +75,9 @@ function Register() {
             return
         }
 
-        const data = {
-            username: userData.username,
-            email: userData.email,
-            password: userData.password,
-            // token:  generateUniqueToken(10)
-        }
+        registerUser()
 
-        // send user data to server
-        axios.post(`http://localhost:80/api/insertUser.php`, data).then(function(response) {
-        // axios.post(`https://api.invoice-app.xyz/api/insertUser.php`, data).then(function(response) {
-            // console.log(response.data)
-            if(response.data !== 'error') {
-                saveToLocalStorage('token', response.data)
-                navigate('/')
-            } else {
-                setError('An error occurred')
-                // console.log(response.data)
-            }
-        })
-
-        console.log('submitted')
+        console.log('submitted', userData)
         resetForm()
     }
     // functions handling form submission END

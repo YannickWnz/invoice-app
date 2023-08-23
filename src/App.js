@@ -15,7 +15,6 @@ import UserProfile from './Components/UserProfile/UserProfile';
 
 function App() {
 
-  // console.log('yooo')
   const [test, setTest] = useState(false)
 
   function handlesettest() {
