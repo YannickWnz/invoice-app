@@ -11,8 +11,6 @@ function Register() {
 
     axios.defaults.withCredentials = true
 
-    console.log('register')
-
     // setting empty input names
     const [userData, setUserData] = useState({
         username:'',
@@ -45,7 +43,19 @@ function Register() {
             
             const res = await axios.post('http://localhost:1556/signup', userData)
             
-            console.log(res.data)
+            // if(res.data.errors) {
+            //     // console.log(res.data.errors.msg)
+            //     // throw new Error(res.data.errors.msg)
+            // }
+            if(res.status === 200) {
+                // console.log(res.data.response.data)
+                // throw new Error(res.data)
+                console.log('yup')
+                console.log(res.data)
+                navigate('/')
+            }
+
+            // console.log(res)
 
         } catch (error) {
             console.log(error)
@@ -69,7 +79,7 @@ function Register() {
             setError('Password is required')
             return
         }
-        if(userData.password.length < 6) {
+        if(userData.password.length < 2) {
             console.log('cant be empty')
             setError('Password should be at least 6 characters')
             return

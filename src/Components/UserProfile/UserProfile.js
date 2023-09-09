@@ -30,7 +30,7 @@ export default function UserProfile({test, handlesettest}) {
     }
 
     useEffect(() => {
-        fetchLoginUserData()
+        // fetchLoginUserData()
     }, [test])
 
     function logUserOut() {

@@ -26,6 +26,18 @@ function Login() {
         setTextType(!textType)
     }
 
+    const logUserIn = async () => {
+
+        try {
+            const res = await axios.post('http://localhost:1556/signin', userData)
+            
+            console.log(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     // function handling login form submission
     const handleLoginFormSubmit = e => {
         e.preventDefault()
@@ -45,17 +57,19 @@ function Login() {
             password: userData.password
         }
 
-        axios.post(`http://localhost:80/api/fetchUser.php`, userLoginData).then(function(response) {
-        // axios.post(`https://api.invoice-app.xyz/api/fetchUser.php`, userLoginData).then(function(response) {
+        logUserIn()
 
-            if(response.data == 'error') {
-                setError('Invalid username or password')
-            } else {
-                saveToLocalStorage('token', response.data)
-                navigate('/')
-            }
+        // axios.post(`http://localhost:80/api/fetchUser.php`, userLoginData).then(function(response) {
+        // // axios.post(`https://api.invoice-app.xyz/api/fetchUser.php`, userLoginData).then(function(response) {
 
-        })
+        //     if(response.data == 'error') {
+        //         setError('Invalid username or password')
+        //     } else {
+        //         saveToLocalStorage('token', response.data)
+        //         navigate('/')
+        //     }
+
+        // })
 
         resetForm()
     }
