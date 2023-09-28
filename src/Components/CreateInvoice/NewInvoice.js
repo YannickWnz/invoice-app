@@ -4,10 +4,12 @@ import axios from 'axios'
 import moment from 'moment'
 import { Navigate, useNavigate } from 'react-router-dom';
 import ThemeContext from '../../context/Context';
+import { getUserTokenFromLocalStorage } from '../Utilities/Utilities';
 
 let nextID = 0;
 let testdate =  moment().add(86, 'days').calendar();
 let invoiceDate = moment().format('LL');   // April 16, 2023
+
 
 
 export default function NewInvoice({invoiceFormState, newInvoice, formdata, showInvoiceForm, handleShowInvoiceForm, fetchedInvoiceData, setFetchedItems, fetchedItems}) {
@@ -148,6 +150,19 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
         }
     }
 
+    const createNewInvoice = async (data) => {
+
+        
+        try {
+            const response = await axios.post('http://localhost:1556/createInvoice', data)
+            
+            console.log(response.data)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
     
     async function handleInvoiceFormData(data) {
         // console.log('handle function data clicked')
@@ -200,7 +215,7 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
 
         // let invoiceStatus = 'Pending'
         let dueDate = moment().add(termsOfPayment, 'days').calendar();
-        const token = localStorage.getItem('token');
+        // const token = localStorage.getItem('token');
 
         if(!showInvoiceForm) {
             const invoicedata = 
@@ -225,18 +240,23 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
                     listitems: JSON.stringify(listel),
                     sumOfTotalPrice: sumOfTotalPrice,
                     invoiceStatus: invoiceStatus,
-                    token: token
+                    token: getUserTokenFromLocalStorage()
+                    // token: token
                 }        
     
             let jsonInvoiceData = JSON.stringify(invoicedata)
             
             formdata(invoicedata)
+
+            // console.log(invoicedata)
+            createNewInvoice(invoicedata)
     
-            await axios.post('http://localhost:80/api/', jsonInvoiceData).then(function(response) {
-            // await axios.post('https://api.invoice-app.xyz/api/', jsonInvoiceData).then(function(response) {
-                console.log(response.data)
-                setIsDataFetched(true)
-            })
+            // await axios.post('http://localhost:80/api/', jsonInvoiceData).then(function(response) {
+            // // await axios.post('https://api.invoice-app.xyz/api/', jsonInvoiceData).then(function(response) {
+            //     console.log(response.data)
+            //     setIsDataFetched(true)
+            // })
+
         } else {
             const edittedInvoiceData = {
                 invoiceID: fetchedInvoiceData[0].invoiceID,
@@ -256,7 +276,8 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
                 sumOfTotalPrice: sumOfTotalPrice,
                 dueDate: dueDate,
                 termsOfPayment: termsOfPayment,
-                token: token
+                token: getUserTokenFromLocalStorage()
+                // token: token
             }
 
             let jsonEdittedInvoiceData = JSON.stringify(edittedInvoiceData)

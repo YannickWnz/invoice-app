@@ -2,6 +2,7 @@ import './Register.scss'
 import {Link, Navigate, useNavigate} from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
+import { saveToLocalStorage } from '../../Components/Utilities/Utilities';
 
 
 
@@ -37,25 +38,18 @@ function Register() {
 
     }
 
+
     const registerUser = async () => {
 
         try {
             
             const res = await axios.post('http://localhost:1556/signup', userData)
             
-            // if(res.data.errors) {
-            //     // console.log(res.data.errors.msg)
-            //     // throw new Error(res.data.errors.msg)
-            // }
             if(res.status === 200) {
-                // console.log(res.data.response.data)
-                // throw new Error(res.data)
-                console.log('yup')
                 console.log(res.data)
+                saveToLocalStorage('userDetails', JSON.stringify(res.data.newUserDetails))
                 navigate('/')
             }
-
-            // console.log(res)
 
         } catch (error) {
             console.log(error)
@@ -87,7 +81,7 @@ function Register() {
 
         registerUser()
 
-        console.log('submitted', userData)
+        // console.log('submitted', userData)
         resetForm()
     }
     // functions handling form submission END
@@ -102,11 +96,6 @@ function Register() {
         setError('')
     }
     // function handling form reset END
-
-    // function saving user token in local storage after registration is successful
-    function saveToLocalStorage(key, value) {
-        localStorage.setItem(key, value);
-    }
 
     // function generating user token START
     function generateUniqueToken(length) {

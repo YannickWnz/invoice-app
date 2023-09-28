@@ -13,9 +13,6 @@ export default function UserProfile({test, handlesettest}) {
         // console.log(token)
 
         await axios.get(`http://localhost:80/api/fetchUserData.php/${token}`).then(function(response) {
-        // await axios.get(`https://api.invoice-app.xyz/api/fetchUserData.php/${token}`).then(function(response) {
-            // console.log(response.data)
-            // console.log(loginUserData)
             
             if(!Array.isArray(response.data)) {
                 console.log(response.data)

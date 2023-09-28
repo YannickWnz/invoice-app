@@ -5,6 +5,7 @@ import NewInvoice from '../../Components/CreateInvoice/NewInvoice'
 import axios from 'axios'
 import ThemeContext from '../../context/Context'
 import UserProfile from '../../Components/UserProfile/UserProfile'
+import { getUserTokenFromLocalStorage } from '../../Components/Utilities/Utilities'
 
 function Home() {
     // console.log(test)
@@ -29,7 +30,7 @@ function Home() {
     const [filterBox, setFilterBox] = useState(false)
     const [invoiceData, setInvoiceData] = useState([])
     const navigate = useNavigate()
-    const [userToken, setUserToken] = useState('')
+    // const [userToken, setUserToken] = useState('')
     const [selectedStatus, setSelectedStatus] = useState([]);
     const [isChecked, setIsChecked] = useState(false)
 
@@ -38,6 +39,11 @@ function Home() {
         let stringtoLower = string.toLowerCase()
         return stringtoLower.charAt(0).toUpperCase() + stringtoLower.slice(1);
     }
+
+    // getting user token
+    let userToken = getUserTokenFromLocalStorage()
+
+
 
     // function handling checkbox to filter invoices by status  START
     const handleCheckboxChange = (event) => {
@@ -65,14 +71,27 @@ function Home() {
     }
 
     // function fetching user's invoices data START 
+
+    const getCreatedInvoices = async () => {
+
+        try {
+            
+            // const response = await axios.get('http://localhost:1556/signin', userEmail)
+
+            // console.log(response.data)
+
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     async function getInvoiceFromDB() {
 
         const token = localStorage.getItem('token');
-        // const token = localStorage.getItem('token');
 
         await axios.get(`http://localhost:80/api/${token}`).then(function(response) {
-        // await axios.get(`https://api.invoice-app.xyz/api/${token}`).then(function(response) {
-            // console.log(response.data)
             
             if(!Array.isArray(response.data)) {
                 console.log(response.data)
@@ -84,7 +103,7 @@ function Home() {
         })
     }
     useEffect(() => {
-        getInvoiceFromDB()
+        // getInvoiceFromDB()
     }, [isDataFetched])
     // function fetching user's invoices data END 
 

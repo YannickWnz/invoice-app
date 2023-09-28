@@ -2,6 +2,9 @@ import './Login.scss'
 import {Link, useNavigate} from 'react-router-dom'
 import {useState} from 'react'
 import axios from 'axios'
+import { saveToLocalStorage } from '../../Components/Utilities/Utilities';
+
+
 
 function Login() {
 
@@ -28,10 +31,18 @@ function Login() {
 
     const logUserIn = async () => {
 
+        
         try {
             const res = await axios.post('http://localhost:1556/signin', userData)
             
-            console.log(res.data)
+            if(res.status === 200) {
+                console.log(res.data, 'login successful')
+
+                saveToLocalStorage('userDetails', JSON.stringify(res.data.userDetails))
+                navigate('/')
+                resetForm()
+            }
+
         } catch (error) {
             console.log(error)
         }
@@ -41,6 +52,8 @@ function Login() {
     // function handling login form submission
     const handleLoginFormSubmit = e => {
         e.preventDefault()
+
+        console.log('yooo')
 
         if(userData.username.length === 0) {
             setError('Please fill in all fields')
@@ -59,25 +72,12 @@ function Login() {
 
         logUserIn()
 
-        // axios.post(`http://localhost:80/api/fetchUser.php`, userLoginData).then(function(response) {
-        // // axios.post(`https://api.invoice-app.xyz/api/fetchUser.php`, userLoginData).then(function(response) {
-
-        //     if(response.data == 'error') {
-        //         setError('Invalid username or password')
-        //     } else {
-        //         saveToLocalStorage('token', response.data)
-        //         navigate('/')
-        //     }
-
-        // })
-
-        resetForm()
     }
 
      // function saving user token in local storage after registration is successful
-    function saveToLocalStorage(key, value) {
-        localStorage.setItem(key, value);
-    }
+    // function saveToLocalStorage(key, value) {
+    //     localStorage.setItem(key, value);
+    // }
 
      // function handling form reset START
     const resetForm = () => {
