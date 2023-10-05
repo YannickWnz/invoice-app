@@ -87,6 +87,26 @@ function Home() {
 
     }
 
+    const getUserInvoices = async () => {
+
+        try {
+            
+            const response = await axios.get(`http://localhost:1556/invoice/userInvoice/${getUserTokenFromLocalStorage()}`)
+
+            if(response.status === 200) {
+                // console.log(response.data)
+                setInvoiceData(response.data)
+                setIsDataFetched(false)
+            } 
+
+
+        } catch (error) {
+            console.log(error)
+            setIsDataFetched(false)
+        }
+
+    }
+
     async function getInvoiceFromDB() {
 
         const token = localStorage.getItem('token');
@@ -102,8 +122,11 @@ function Home() {
             setIsDataFetched(false)
         })
     }
+
+
     useEffect(() => {
         // getInvoiceFromDB()
+        getUserInvoices()
     }, [isDataFetched])
     // function fetching user's invoices data END 
 

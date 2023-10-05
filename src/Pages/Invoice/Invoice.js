@@ -22,9 +22,28 @@ function Invoice() {
     setShowInvoiceForm(!showInvoiceForm)
   }
 
+  const fetchSelectedInvoiceData = async () => {
+
+    try {
+
+      const response = await axios.get(`http://localhost:1556/invoice/selectedInvoice/${id}`)
+
+      if(response.status === 200) {
+        setFetchedInvoiceData(response.data)
+        setItemList(JSON.parse(response.data[0].item_list))
+      }
+      
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
 
   useEffect(() => {
-    getSelectedInvoice()
+    // getSelectedInvoice()
+    fetchSelectedInvoiceData()
   }, [])
 
   async function getSelectedInvoice() {
@@ -50,26 +69,54 @@ function Invoice() {
 
   const deleteInvoice = async id => {
 
-    await axios.delete(`http://localhost:80/api/${id}`).then(function(response) {
-    // await axios.delete(`https://api.invoice-app.xyz/api/${id}`).then(function(response) {
-      console.log(response.data)
-      if(response.data !== 'error') {
-        navigate('/');
+    // await axios.delete(`http://localhost:80/api/${id}`).then(function(response) {
+    // // await axios.delete(`https://api.invoice-app.xyz/api/${id}`).then(function(response) {
+    //   console.log(response.data)
+    //   if(response.data !== 'error') {
+    //     navigate('/');
+    //   }
+    // })
+
+    try {
+
+      const response = await axios.get(`http://localhost:1556/invoice/deleteInvoice/${id}`)
+      
+      if(response.status === 200) {
+        console.log(response.data)
+        navigate('/')
       }
-    })
+      
+    } catch (error) {
+      console.log(error)
+    }
 
   }
 
   const updateInvoiceStatus = async id => {
 
-    await axios.put(`http://localhost:80/api/${id}`).then(function(response) {
-    // await axios.put(`https://api.invoice-app.xyz/api/${id}`).then(function(response) {
-        console.log(response.data)
-        navigate('/');
+    // await axios.put(`http://localhost:80/api/${id}`).then(function(response) {
+    // // await axios.put(`https://api.invoice-app.xyz/api/${id}`).then(function(response) {
+    //     console.log(response.data)
+    //     navigate('/');
 
-    })
+    // })
+
+    try {
+
+      const response = await axios.get(`http://localhost:1556/invoice/updateStatus/${id}`)
+
+      
+      if(response.status === 200) {
+        console.log(response.data)
+        navigate('/')
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
 
   }
+
 
   return (
     <div className='selected-invoice'>
@@ -90,12 +137,9 @@ function Invoice() {
           {fetchedInvoiceData.length > 0 && fetchedInvoiceData.map((fetcheddata, index) => {return <div key={fetcheddata.invoiceID} className='actions-wrapper'>
             <div className='status-wrapper'>
               <span>Status</span>
-              {/* <p>Pending</p> */}
-              {/* <div className=' invoice-status paid'> */}
               <div className={`invoice-status ${fetcheddata.invoiceStatus.toLowerCase()}`}>
                 <span className='dot'></span>
                 <p>{fetcheddata.invoiceStatus}</p>
-                {/* <p>Paid</p> */}
               </div>
             </div>
 
@@ -115,7 +159,6 @@ function Invoice() {
           {fetchedInvoiceData.length > 0 && fetchedInvoiceData.map((fetcheddata, index) => {return <div key={fetcheddata.invoiceID} className='invoice-details-container'>
             <div className='details-section-1'>
               <div className='receipt-description'>
-                {/* <p> <span>#</span>RT985 </p> */}
                 <p> <span>#</span>{fetcheddata.receiptNumber}</p>
                 <p>{fetcheddata.projectDescription}</p>
               </div>

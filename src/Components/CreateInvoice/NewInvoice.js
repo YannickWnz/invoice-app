@@ -154,9 +154,10 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
 
         
         try {
-            const response = await axios.post('http://localhost:1556/createInvoice', data)
+            const response = await axios.post('http://localhost:1556/invoice/createInvoice', data)
             
             console.log(response.data)
+            setIsDataFetched(true)
 
         } catch (error) {
             console.log(error)
@@ -165,21 +166,16 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
     }
     
     async function handleInvoiceFormData(data) {
-        // console.log('handle function data clicked')
-        // console.log(data)
+
 
         let newdata = [...data]
 
         for(let i = 0; i < newdata.length; i++) {
 
             if(data[i].itemName == '') {
-                // setEmptyItemNameFieldError(true)
-                // setEmptyFieldError(true)
                 setEmptyItemListFieldError(true)
-                // data[i].itemNameIndex = i
                 return 
             } else if (data[i].itemQty == '') {
-                // data[i].qtyIndex = i
                 setEmptyItemListFieldError(true)
                 return
             } else if (data[i].itemPrice == '') {
@@ -250,6 +246,7 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
 
             // console.log(invoicedata)
             createNewInvoice(invoicedata)
+
     
             // await axios.post('http://localhost:80/api/', jsonInvoiceData).then(function(response) {
             // // await axios.post('https://api.invoice-app.xyz/api/', jsonInvoiceData).then(function(response) {
@@ -741,7 +738,6 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
                                         <div className='item-list'>
                                             <h3>Item List</h3>
                                             <div className='items'>
-                                                {/* item defs */}
                                                 <div className='list-name'>
                                                     <div className="item-name">
                                                         <p>Item Name</p>
@@ -757,25 +753,6 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
                                                     </div>
                                                     <div className='delete-icon'></div>
                                                 </div>
-                                                {/* inputs */}
-                                                {/* <div className='inputs'>
-                                                    <div className='item-name-input'>
-                                                        <input type='text' />
-                                                    </div>
-                                                    <div className='item-qty-input'>
-                                                        <input type='number' />
-                                                    </div>
-                                                    <div className='item-price-input'>
-                                                        <input type='text' /> 
-                                                    </div>
-                                                    <div className='item-total-price'>
-                                                        <p>156.00</p>
-                                                    </div>
-                                                    <div className='item-delete-icon'>
-                                                        <img src='/starter-code/assets/icon-delete.svg' />
-                                                    </div>
-                                                </div> */}
-                                                {/* {itemElement} */}
                                                 {showInvoiceForm && fetchedItems.length > 0 && fetchedItems.map((element, index) => {
                                                     return (
                                                         <div key={element.id} className='inputs'>
@@ -824,29 +801,22 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
                                                 })}
 
                                                 {!showInvoiceForm && listel && listel.map((element, index) => {
-                                                {/* {listel && listel.map((element, index) => { */}
                                                     return (
                                                         <div key={element.id} className='inputs'>
                                                             <div className='item-name-input'>
                                                                 <input 
                                                                 type=''
                                                                 name='itemName'
-                                                                // className={`${emptyItemNameFieldError && element.itemNameIndex === index ? 'input-error' : ''}`}
                                                                 onChange={(e) => {
                                                                     handleItemLists(index, e)
                                                                     setEmptyItemNameFieldError(false)
-                                                                    // console.log(listel[index][e.target.name])
-                                                                    // setElName(prev => [...prev, e.target.value])
                                                                 }} 
                                                                 />
                                                             </div>
-                                                            {/* {element.itemNameCheck} */}
                                                             <div className='item-qty-input'>
                                                                 <input 
                                                                 type='number' 
                                                                 name='itemQty'
-                                                                // className={`${emptyItemQtyFieldError && element.qtyIndex === index ? 'input-error' : ''}`}
-                                                                // className={`${itemQtyError ? 'input-error' : ''}`}
                                                                 onChange={(e) => {
                                                                     handleItemLists(index, e)
                                                                     setEmptyItemQtyFieldError(false)
@@ -857,22 +827,15 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
                                                                 type='number' 
                                                                 placeholder='0.00' 
                                                                 name='itemPrice'
-                                                                // className={`${emptyItemListFieldError ? 'input-error' : ''}`}
                                                                 onChange={(e) => {
-                                                                    // console.log(e.target.name)
                                                                     setEmptyItemListFieldError(false)
-                                                                    // setItemPrice(e.target.value)
                                                                     handleItemLists(index, e)
-                                                                    // console.log(e.target.value)
                                                                 }} /> 
                                                             </div>
                                                             <div className='item-total-price'>
-                                                                {/* <p>156.00</p> */}
-                                                                {/* <p>{itemQty * itemPrice}</p> */}
                                                                 <p>{`${element.totalPrice ? element.totalPrice : '0.00'}`}</p>
                                                             </div>
                                                             <div className='item-delete-icon' onClick={(e) => {
-                                                                // console.log(element.id)
                                                                 
                                                                 filterClickedItem(element.id)
                                                             }}>
@@ -912,7 +875,6 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
                     </div>
                     <div className='buttons-wrapper'>
                         <div className='wrapper-contents'>
-                            {/* <h1>BUTTONS HERE!!!!</h1> */}
                             {!showInvoiceForm && <button 
                             className='discard' 
                             type='reset'
@@ -950,7 +912,6 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
                                 >
                                     Save & Send
                                 </button>
-                                {/* <input className='send' type='submit' value='Save & Send' /> */}
                             </div>
                         </div>
                     </div>
