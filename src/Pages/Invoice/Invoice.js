@@ -31,9 +31,9 @@ function Invoice() {
       if(response.status === 200) {
         setFetchedInvoiceData(response.data)
         setItemList(JSON.parse(response.data[0].item_list))
+        setFetchedItems(JSON.parse(response.data[0].item_list))
       }
       
-
     } catch (error) {
       console.log(error)
     }
@@ -45,6 +45,12 @@ function Invoice() {
     // getSelectedInvoice()
     fetchSelectedInvoiceData()
   }, [])
+
+  const getSelectedInvoiceData = async () => {
+
+    // const response = await axios.get
+
+  }
 
   async function getSelectedInvoice() {
 

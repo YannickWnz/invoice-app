@@ -164,6 +164,31 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
         }
 
     }
+
+    const updateInvoice = async (data) => {
+
+        // console.log(data)
+            // setIsDataFetched(true)
+            // navigate('/');
+
+
+        try {
+            
+            const response = await axios.put('http://localhost:1556/invoice/updateInvoice', data)
+
+            if(response.status === 200) {
+                console.log(response.data)
+                setIsDataFetched(true)
+                navigate('/');
+            }
+
+
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
     
     async function handleInvoiceFormData(data) {
 
@@ -279,13 +304,15 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
 
             let jsonEdittedInvoiceData = JSON.stringify(edittedInvoiceData)
 
-            await axios.put('http://localhost:80/api/', jsonEdittedInvoiceData).then(function(response) {
-            // await axios.put('https://api.invoice-app.xyz/api/', jsonEdittedInvoiceData).then(function(response) {
-                console.log(response.data)
-                setIsDataFetched(true)
-            })
+            updateInvoice(edittedInvoiceData)
+
+            // await axios.put('http://localhost:80/api/', jsonEdittedInvoiceData).then(function(response) {
+            // // await axios.put('https://api.invoice-app.xyz/api/', jsonEdittedInvoiceData).then(function(response) {
+            //     console.log(response.data)
+            //     setIsDataFetched(true)
+            // })
             
-            navigate('/');
+            // navigate('/');
         }
         
         console.log('form submitted successfully')
@@ -357,7 +384,7 @@ export default function NewInvoice({invoiceFormState, newInvoice, formdata, show
             handleInvoiceFormData(listel)
         } 
         else {
-            console.log('editing invoice form blah blah blah')
+            // console.log('editing invoice form blah blah blah')
             handleInvoiceFormData(fetchedItems)
         }
         
